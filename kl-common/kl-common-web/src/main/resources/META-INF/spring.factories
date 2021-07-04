@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.goduck.kl.common.web.aspect.WebLogAspect,\
+  cn.goduck.kl.common.web.config.WebMvcConfig,\
+  cn.goduck.kl.common.web.exception.GlobalExceptionHandler

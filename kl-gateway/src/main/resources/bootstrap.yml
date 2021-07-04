@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: kl-gateway
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos-server:8848
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yaml
+
+    sentinel:
+      # 网关流控开关
+      enabled: true
+      # 取消控制台懒加载，项目启动即连接Sentinel
+      eager: true
+      transport:
+        dashboard: sentinel-server:8858
+      datasource:
+        ds1.nacos:
+          server-addr: ${spring.cloud.nacos.discovery.server-addr}
+          data-id: ${spring.application.name}-flow-rules
+          groupId: SENTINEL_GROUP
+          data-type: json
+          rule-type: gw-flow
+        ds2.nacos:
+          server-addr: ${spring.cloud.nacos.discovery.server-addr}
+          data-id: ${spring.application.name}-api-group-rules
+          groupId: SENTINEL_GROUP
+          data-type: json
+          rule-type: gw-api-group
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # 认证中心
+        - id: kl-auth
+          uri: lb://kl-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+        # 系统模块
+        - id: kl-admin
+          uri: lb://kl-admin
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1

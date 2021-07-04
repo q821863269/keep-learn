@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>keep-learn</artifactId>
+        <groupId>cn.goduck</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>kl-common</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>kl-common-core</module>
+        <module>kl-common-mybatis</module>
+        <module>kl-common-redis</module>
+        <module>kl-common-web</module>
+    </modules>
+
+</project>

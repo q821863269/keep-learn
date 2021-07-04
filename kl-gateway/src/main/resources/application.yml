@@ -1,0 +1,5 @@
+# 不校验白名单
+ignore:
+  whites:
+    - /auth/test
+    - /admin/test
