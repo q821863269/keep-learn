@@ -63,7 +63,7 @@ public class TestController {
     }
 
     @GetMapping("/null")
-    public Object nullTest(){
+    public Object returnNull(){
         return null;
     }
 

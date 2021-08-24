@@ -7,6 +7,6 @@ package cn.goduck.kl.common.core.constant;
  */
 public class RedisConstant {
 
-
+    public static final String REDIS_AGREEMENT = "redis://";
 
 }

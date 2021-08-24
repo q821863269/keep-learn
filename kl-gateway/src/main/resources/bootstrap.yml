@@ -19,7 +19,7 @@ spring:
       # 取消控制台懒加载，项目启动即连接Sentinel
       eager: true
       transport:
-        dashboard: sentinel-server:8858
+        dashboard: sentinel-server:8088
       datasource:
         ds1.nacos:
           server-addr: ${spring.cloud.nacos.discovery.server-addr}
@@ -47,7 +47,7 @@ spring:
             - Path=/auth/**
           filters:
             - StripPrefix=1
-        # 系统模块
+        # 管理中心
         - id: kl-admin
           uri: lb://kl-admin
           predicates:

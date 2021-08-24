@@ -32,6 +32,12 @@ import java.util.Map;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String JKS_FILE_NAME = "jwt.jks";
+
+    private static final String ALIAS = "jwt";
+
+    private static final String PASSWORD = "123456";
+
     private final CustomerAuthenticationEntryPoint customerAuthenticationEntryPoint;
 
     @Override
@@ -86,8 +92,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 从classpath下的密钥库中获取密钥对(公钥+私钥)
      */
     public KeyPair keyPair() {
-        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "123456".toCharArray());
-        return factory.getKeyPair("jwt", "123456".toCharArray());
+        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ClassPathResource(JKS_FILE_NAME), PASSWORD.toCharArray());
+        return factory.getKeyPair(ALIAS);
     }
 
     /**
