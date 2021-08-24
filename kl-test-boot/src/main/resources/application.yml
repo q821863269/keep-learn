@@ -2,12 +2,16 @@ server:
   port: 9999
 
 spring:
+  application:
+    name: kl-test-boot
+
   redis:
     host: redis-server
+    password: wotainanle
 
   datasource:
     username: root
-    password: root
+    password: wotainanle
     url: jdbc:mysql://mysql-server:3306/kl-test?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
 

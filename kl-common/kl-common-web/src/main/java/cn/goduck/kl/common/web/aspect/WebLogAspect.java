@@ -96,9 +96,9 @@ public class WebLogAspect {
             webLogMap.put("handlerMethodPath", handlerMethodPath);
             webLogMap.put("description", description);
             webLogMap.put("parameter", parameter);
-            webLogMap.put("result", ObjectUtil.isNull(result) ? StrConstant.EMPTY : result);
+            webLogMap.put("result", result);
             webLogMap.put("spendTime", spendTime + "ms");
-            webLogMap.put("username", ObjectUtil.isNull(username) ? "noName" : username);
+            webLogMap.put("username", username);
 
             // 格式化json
             //String webLog = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(webLogMap);

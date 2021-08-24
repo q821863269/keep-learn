@@ -55,8 +55,11 @@ public class JwtUtil {
         return JSONUtil.parseObj(jwtPayload);
     }
 
+    /**
+     * 如果获取不到用户Id暂时用 -1 代替，因为不想看到字段为null
+     */
     public static Long getUserId() {
-        return getJwtPayload().getLong(AuthConstant.USER_ID_KEY);
+        return getJwtPayload().getLong(AuthConstant.USER_ID_KEY, -1L);
     }
 
     public static String getUsername() {

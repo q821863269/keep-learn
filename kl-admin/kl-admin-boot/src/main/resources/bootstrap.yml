@@ -7,10 +7,11 @@ spring:
 
   redis:
     host: redis-server
+    password: wotainanle
 
   datasource:
     username: root
-    password: root
+    password: wotainanle
     url: jdbc:mysql://mysql-server:3306/kl-admin?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
 
