@@ -39,6 +39,12 @@
         <dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>kotlin-stdlib-jdk8</artifactId>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>

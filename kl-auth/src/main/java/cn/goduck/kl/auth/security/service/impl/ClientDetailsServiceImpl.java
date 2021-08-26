@@ -7,7 +7,6 @@ import cn.goduck.kl.common.core.base.R;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
@@ -41,7 +40,8 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
                         client.getScope(),
                         client.getAuthorizedGrantTypes(),
                         client.getAuthorities(),
-                        client.getWebServerRedirectUri());
+                        client.getWebServerRedirectUri()
+                );
                 clientDetails.setClientSecret(PasswordEncoderTypeEnum.NOOP.getPrefix() + client.getClientSecret());
                 clientDetails.setAccessTokenValiditySeconds(client.getAccessTokenValidity());
                 clientDetails.setRefreshTokenValiditySeconds(client.getRefreshTokenValidity());
@@ -49,8 +49,9 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
             } else {
                 throw new NoSuchClientException("No client with requested id: " + clientId);
             }
-        } catch (EmptyResultDataAccessException e) {
-            throw new NoSuchClientException("No client with requested id: " + clientId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

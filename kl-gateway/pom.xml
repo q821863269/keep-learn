@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.goduck</groupId>
-            <artifactId>kl-common-core</artifactId>
+            <artifactId>kl-common-redis</artifactId>
         </dependency>
         <!--Spring Cloud & Alibaba -->
         <dependency>
@@ -69,6 +69,35 @@
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+        <!-- OAuth2资源服务器-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>kotlin-stdlib-jdk8</artifactId>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
+        </dependency>
+        <!-- Api文档 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- 配置读取 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
     </dependencies>
 

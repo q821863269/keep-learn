@@ -30,6 +30,9 @@ public enum ResultCode implements IResultCode {
     CLIENT_AUTHENTICATION_FAILED(1013, "客户端认证失败"),
     TOKEN_INVALID_OR_EXPIRED(1014, "token无效或已过期"),
     TOKEN_ACCESS_FORBIDDEN(1015, "token已被禁止访问"),
+
+    AUTHORIZED_ERROR(2001, "访问权限异常"),
+    ACCESS_UNAUTHORIZED(2002, "访问未授权"),
     ;
 
     @ApiModelProperty(value = "响应码")

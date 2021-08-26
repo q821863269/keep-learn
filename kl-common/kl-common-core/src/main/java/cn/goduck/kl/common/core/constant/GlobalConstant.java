@@ -20,4 +20,19 @@ public class GlobalConstant {
     public static final String UPDATE_BY = "updateBy";
     public static final String UPDATE_TIME = "updateTime";
 
+    /**
+     * 用户默认密码
+     */
+    public static final String DEFAULT_USER_PASSWORD = "123456";
+
+    /**
+     * ROOT角色Code
+     */
+    public static final String ROOT_ROLE_CODE = "ROOT";
+
+    /**
+     * 移动端请求
+     */
+    public static final String APP_API_PATTERN = "/*/app-api/**";
+
 }

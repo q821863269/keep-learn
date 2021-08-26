@@ -2,9 +2,12 @@ package cn.goduck.kl.common.core.util;
 
 import cn.goduck.kl.common.core.constant.AuthConstant;
 import cn.goduck.kl.common.core.constant.StrConstant;
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import lombok.SneakyThrows;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -27,7 +30,7 @@ public class JwtUtil {
      * 方式一：client_id、client_secret放在请求路径中
      * 方式二：放在请求头（Request Headers）中的Authorization字段，且经过加密
      */
-    public static String getAuthClientId() {
+    public static String getOAuthClientId() {
         String clientId;
         ServletRequestAttributes servletRequestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
         assert servletRequestAttributes != null;
@@ -47,19 +50,17 @@ public class JwtUtil {
         return clientId;
     }
 
+    @SneakyThrows
     public static JSONObject getJwtPayload() {
         ServletRequestAttributes servletRequestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
         assert servletRequestAttributes != null;
         HttpServletRequest request = servletRequestAttributes.getRequest();
         String jwtPayload = request.getHeader(AuthConstant.JWT_PAYLOAD_KEY);
-        return JSONUtil.parseObj(jwtPayload);
+        return JSONUtil.parseObj(URLUtil.decode(jwtPayload, CharsetUtil.CHARSET_UTF_8));
     }
 
-    /**
-     * 如果获取不到用户Id暂时用 -1 代替，因为不想看到字段为null
-     */
     public static Long getUserId() {
-        return getJwtPayload().getLong(AuthConstant.USER_ID_KEY, -1L);
+        return getJwtPayload().getLong(AuthConstant.USER_ID_KEY);
     }
 
     public static String getUsername() {

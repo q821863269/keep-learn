@@ -6,7 +6,6 @@ import cn.goduck.kl.common.core.constant.StrConstant;
 import cn.goduck.kl.common.core.constant.enums.ResultCode;
 import cn.goduck.kl.common.web.util.HttpUtil;
 import cn.hutool.core.util.StrUtil;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,7 +26,7 @@ import java.util.Base64;
 public class ClientDetailsAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 只有获取token的时候需要携带携带客户端信息，放过其他
         if (!request.getRequestURI().equals("/oauth/token")) {
             filterChain.doFilter(request, response);

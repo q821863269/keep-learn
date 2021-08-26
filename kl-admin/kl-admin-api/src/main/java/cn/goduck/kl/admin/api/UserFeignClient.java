@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(value = "kl-admin", contextId = "userFeignClient")
 public interface UserFeignClient {
 
-    @GetMapping("/api/v1/users/username/{username}")
+    @GetMapping("/users/username/{username}")
     R<SysUserDTO> getUserByUsername(@PathVariable("username") String username);
 
 }

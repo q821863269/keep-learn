@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.goduck.kl.common.redis.config.RedisConfig
+  cn.goduck.kl.common.redis.config.RedisConfig,\
+  cn.goduck.kl.common.redis.config.RedissonConfig

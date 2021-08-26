@@ -91,6 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 从classpath下的密钥库中获取密钥对(公钥+私钥)
      */
+    @Bean
     public KeyPair keyPair() {
         KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ClassPathResource(JKS_FILE_NAME), PASSWORD.toCharArray());
         return factory.getKeyPair(ALIAS);

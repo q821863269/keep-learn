@@ -1,4 +1,4 @@
-package cn.goduck.kl.admin.config;
+package cn.goduck.kl.auth.config;
 
 import cn.hutool.core.collection.CollectionUtil;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +56,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("cn.goduck.kl.admin.controller"))
+                .apis(RequestHandlerSelectors.basePackage("cn.goduck.kl.auth.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(securityContexts)
@@ -65,8 +65,8 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("系统管理")
-                .description("<div style='font-size:14px;color:red;'>系统管理接口</div>")
+                .title("认证管理")
+                .description("<div style='font-size:14px;color:red;'>认证管理接口</div>")
                 .termsOfServiceUrl("https://www.goduck.cn")
                 .contact(new Contact("Kon", "https://www.goduck.cn", "821863269@qq.com"))
                 .license("Open Source")

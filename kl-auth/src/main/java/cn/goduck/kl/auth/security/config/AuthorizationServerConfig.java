@@ -58,7 +58,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         tokenEnhancers.add(tokenEnhancer);
         tokenEnhancers.add(jwtAccessTokenConverter);
         tokenEnhancerChain.setTokenEnhancers(tokenEnhancers);
-        endpoints.authenticationManager(authenticationManager)
+        endpoints
+                .authenticationManager(authenticationManager)
                 .accessTokenConverter(jwtAccessTokenConverter)
                 .tokenEnhancer(tokenEnhancerChain)
                 .userDetailsService(userDetailsService)

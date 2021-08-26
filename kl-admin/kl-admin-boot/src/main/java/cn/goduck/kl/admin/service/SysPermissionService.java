@@ -3,6 +3,8 @@ package cn.goduck.kl.admin.service;
 import cn.goduck.kl.admin.entity.SysPermission;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * Desc:
  * Author: Kon
@@ -10,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysPermissionService extends IService<SysPermission> {
 
+    List<String> listBtnPermByRoles(List<String> roles);
 
 }

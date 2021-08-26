@@ -2,8 +2,31 @@ server:
   port: 8080
 
 spring:
+# 解决：The bean 'conversionServicePostProcessor',
+# defined in class path resource [org/springframework/security/config/annotation/web/configuration/WebSecurityConfiguration.class],
+# could not be registered. A bean with that name has already been defined in class path resource
+# [org/springframework/security/config/annotation/web/reactive/WebFluxSecurityConfiguration.class] and overriding is disabled.
+
+# 解决方案1：
+#  main:
+#    web-application-type: reactive
+# 解决方案2：
+  main:
+    allow-bean-definition-overriding: true
+
   application:
     name: kl-gateway
+
+  redis:
+    host: redis-server
+    password: wotainanle
+
+# 远程获取公钥配置
+#  security:
+#   oauth2:
+#     resourceserver:
+#       jwt:
+#         jwk-set-uri: 'http://localhost:8080/auth/oauth/publicKey'
 
   cloud:
     nacos:
@@ -40,15 +63,13 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        # 认证中心
-        - id: kl-auth
+        - id: 认证服务
           uri: lb://kl-auth
           predicates:
             - Path=/auth/**
           filters:
             - StripPrefix=1
-        # 管理中心
-        - id: kl-admin
+        - id: 系统服务
           uri: lb://kl-admin
           predicates:
             - Path=/admin/**

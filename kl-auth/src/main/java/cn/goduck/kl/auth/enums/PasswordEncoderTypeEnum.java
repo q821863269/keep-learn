@@ -15,8 +15,8 @@ public enum PasswordEncoderTypeEnum {
     NOOP("{noop}", "无加密明文"),
     BCRYPT("{bcrypt}", "BCRYPT加密");
 
-    private String prefix;
+    private final String prefix;
 
-    private String desc;
+    private final String desc;
 
 }

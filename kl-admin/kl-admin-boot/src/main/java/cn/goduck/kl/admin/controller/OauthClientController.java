@@ -1,4 +1,4 @@
-package cn.goduck.kl.admin.controller.v1;
+package cn.goduck.kl.admin.controller;
 
 import cn.goduck.kl.admin.api.OAuthClientFeignClient;
 import cn.goduck.kl.admin.entity.SysOauthClient;
@@ -23,7 +23,7 @@ import java.util.Arrays;
  */
 @Api(tags = "客户端接口")
 @RestController
-@RequestMapping("/api/v1/oauth-clients")
+@RequestMapping("/oauthClients")
 @AllArgsConstructor
 public class OauthClientController implements OAuthClientFeignClient {
 

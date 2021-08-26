@@ -34,4 +34,9 @@ public class GatewayResponseUtils {
         return serverHttpResponse.writeWith(Mono.just(dataBuffer));
     }
 
+    public static Mono<Void> write(ServerHttpResponse serverHttpResponse, HttpStatus httpStatus, R<Object> r) {
+        DataBuffer dataBuffer = buildDataBuffer(serverHttpResponse, r);
+        return serverHttpResponse.writeWith(Mono.just(dataBuffer));
+    }
+
 }

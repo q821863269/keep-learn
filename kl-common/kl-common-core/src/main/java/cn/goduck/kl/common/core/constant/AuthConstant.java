@@ -28,6 +28,16 @@ public class AuthConstant {
     public static final String JWT_PAYLOAD_KEY = "payload";
 
     /**
+     * JWT ID 唯一标识
+     */
+    public static final String JWT_JTI = "jti";
+
+    /**
+     * JWT ID 唯一标识
+     */
+    public static final String JWT_EXP = "exp";
+
+    /**
      * 用户Id
      */
     public static final String USER_ID_KEY = "userId";

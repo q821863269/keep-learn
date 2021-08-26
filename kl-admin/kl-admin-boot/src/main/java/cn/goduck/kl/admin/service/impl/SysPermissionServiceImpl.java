@@ -6,6 +6,8 @@ import cn.goduck.kl.admin.mapper.SysPermissionMapper;
 import cn.goduck.kl.admin.entity.SysPermission;
 import cn.goduck.kl.admin.service.SysPermissionService;
 
+import java.util.List;
+
 /**
  * Desc:
  * Author: Kon
@@ -13,5 +15,10 @@ import cn.goduck.kl.admin.service.SysPermissionService;
  */
 @Service
 public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements SysPermissionService {
+
+    @Override
+    public List<String> listBtnPermByRoles(List<String> roles) {
+        return this.baseMapper.listBtnPermByRoles(roles);
+    }
 
 }

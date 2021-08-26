@@ -1,5 +1,12 @@
-# 不校验白名单
-ignore:
-  whites:
-    - /auth/test
-    - /admin/test
+security:
+  # 配置白名单路径(无需登录)
+  ignoreUrls:
+    - /webjars/**
+    - /swagger-resources/**
+    - /doc.html
+    - /*/v2/api-docs
+    - /oauth/token/**
+
+  # 是否开启本地缓存
+  localCache:
+    enabled: false
