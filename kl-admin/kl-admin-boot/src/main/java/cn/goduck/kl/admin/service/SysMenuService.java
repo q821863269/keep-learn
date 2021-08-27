@@ -1,7 +1,10 @@
 package cn.goduck.kl.admin.service;
 
 import cn.goduck.kl.admin.entity.SysMenu;
+import cn.goduck.kl.admin.vo.RouteVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * Desc:
@@ -10,5 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysMenuService extends IService<SysMenu> {
 
+    List<RouteVO> routeList();
 
 }

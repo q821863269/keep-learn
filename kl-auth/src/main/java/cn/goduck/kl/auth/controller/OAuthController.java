@@ -6,6 +6,7 @@ import cn.goduck.kl.common.core.constant.RedisConstant;
 import cn.goduck.kl.common.core.constant.StrConstant;
 import cn.goduck.kl.common.core.util.JwtUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -70,20 +71,22 @@ public class OAuthController {
         JSONObject payload = JwtUtil.getJwtPayload();
         // JWT唯一标识
         String jti = payload.getStr(AuthConstant.JWT_JTI);
-        // JWT过期时间戳(单位：秒)
-        Long expireTime = payload.getLong(AuthConstant.JWT_EXP);
-        // redis key
-        String key = RedisConstant.buildKey(RedisConstant.AUTH_TOKEN_BLACKLIST_PREFIX, jti);
-        if (ObjectUtil.isNotNull(expireTime)) {
-            // 当前时间（单位：秒）
-            long currentTime = System.currentTimeMillis() / 1000;
-            // token未过期，添加至缓存作为黑名单限制访问，缓存时间为token过期剩余时间
-            if (expireTime > currentTime) {
-                redisTemplate.opsForValue().set(key, StrConstant.EMPTY, (expireTime - currentTime), TimeUnit.SECONDS);
+        if (StrUtil.isNotBlank(jti)) {
+            // JWT过期时间戳(单位：秒)
+            Long expireTime = payload.getLong(AuthConstant.JWT_EXP);
+            // redis key
+            String key = RedisConstant.buildKey(RedisConstant.AUTH_TOKEN_BLACKLIST_PREFIX, jti);
+            if (ObjectUtil.isNotNull(expireTime)) {
+                // 当前时间（单位：秒）
+                long currentTime = System.currentTimeMillis() / 1000;
+                // token未过期，添加至缓存作为黑名单限制访问，缓存时间为token过期剩余时间
+                if (expireTime > currentTime) {
+                    redisTemplate.opsForValue().set(key, StrConstant.EMPTY, (expireTime - currentTime), TimeUnit.SECONDS);
+                }
+            } else {
+                // token 永不过期则永久加入黑名单
+                redisTemplate.opsForValue().set(key, StrConstant.EMPTY);
             }
-        } else {
-            // token 永不过期则永久加入黑名单
-            redisTemplate.opsForValue().set(key, StrConstant.EMPTY);
         }
         return R.ok("注销成功");
     }

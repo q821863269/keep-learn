@@ -12,7 +12,7 @@ public class RedisConstant {
     /**
      * 黑名单token前缀
      */
-    public static final String AUTH_TOKEN_BLACKLIST_PREFIX = "auth_token:blacklist:";
+    public static final String AUTH_TOKEN_BLACKLIST_PREFIX = "auth_token:blacklist";
 
     public static final String URL_PERM_ROLES_KEY = "system:url_perm:roles";
     public static final String BTN_PERM_ROLES_KEY = "system:btn_perm:roles";

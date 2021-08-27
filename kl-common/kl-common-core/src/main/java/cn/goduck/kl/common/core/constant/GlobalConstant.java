@@ -21,6 +21,16 @@ public class GlobalConstant {
     public static final String UPDATE_TIME = "updateTime";
 
     /**
+     * 有效状态
+     */
+    public static final Integer VALID = 0;
+
+    /**
+     * 失效状态
+     */
+    public static final Integer INVALID = 1;
+
+    /**
      * 用户默认密码
      */
     public static final String DEFAULT_USER_PASSWORD = "123456";
@@ -29,6 +39,16 @@ public class GlobalConstant {
      * ROOT角色Code
      */
     public static final String ROOT_ROLE_CODE = "ROOT";
+
+    /**
+     * 根部门ID
+     */
+    public static final Long DEPT_ROOT_ID = 0L;
+
+    /**
+     * 根菜单ID
+     */
+    public static final Long MENU_ROOT_ID = 0L;
 
     /**
      * 移动端请求

@@ -25,4 +25,43 @@
     id, `name`, parent_id, route_name, route_path, component, redirect, icon, sort, visible, 
     deleted, create_by, create_time, update_by, update_time
   </sql>
+
+  <resultMap id="SysMenuVOMap" type="cn.goduck.kl.admin.vo.SysMenuVO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="route_name" jdbcType="VARCHAR" property="routeName" />
+    <result column="route_path" jdbcType="VARCHAR" property="routePath" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="redirect" jdbcType="VARCHAR" property="redirect" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="visible" jdbcType="BOOLEAN" property="visible" />
+    <collection property="roles" ofType="string" javaType="list">
+      <result column="code"/>
+    </collection>
+  </resultMap>
+
+  <select id="menuList" resultMap="SysMenuVOMap">
+    select
+      t1.id,
+      t1.name,
+      t1.parent_id,
+      t1.route_name,
+      t1.route_path,
+      t1.component,
+      t1.redirect,
+      t1.icon,
+      t1.sort,
+      t1.visible,
+      t3.code
+    from sys_menu t1
+    left join sys_role_menu t2 on t1.id = t2.menu_id
+    left join sys_role t3 on t2.role_id = t3.id
+    where t1.deleted = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
+    and t3.deleted = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
+    and t1.visible = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
+    order by t1.sort asc
+  </select>
+
 </mapper>

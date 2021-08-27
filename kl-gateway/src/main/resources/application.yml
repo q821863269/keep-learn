@@ -9,4 +9,4 @@ security:
 
   # 是否开启本地缓存
   localCache:
-    enabled: false
+    enabled: true
