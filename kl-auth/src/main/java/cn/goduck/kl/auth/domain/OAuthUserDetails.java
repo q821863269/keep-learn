@@ -1,6 +1,6 @@
 package cn.goduck.kl.auth.domain;
 
-import cn.goduck.kl.admin.dto.SysUserDTO;
+import cn.goduck.kl.admin.dto.UserDTO;
 import cn.goduck.kl.auth.enums.PasswordEncoderTypeEnum;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.Data;
@@ -32,7 +32,7 @@ public class OAuthUserDetails implements UserDetails {
 
     private Collection<SimpleGrantedAuthority> authorities;
 
-    public OAuthUserDetails(SysUserDTO user) {
+    public OAuthUserDetails(UserDTO user) {
         this.setId(user.getId());
         this.setUsername(user.getUsername());
         this.setPassword(PasswordEncoderTypeEnum.BCRYPT.getPrefix() + user.getPassword());

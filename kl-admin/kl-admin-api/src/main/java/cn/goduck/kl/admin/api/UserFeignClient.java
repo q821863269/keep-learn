@@ -1,6 +1,6 @@
 package cn.goduck.kl.admin.api;
 
-import cn.goduck.kl.admin.dto.SysUserDTO;
+import cn.goduck.kl.admin.dto.UserDTO;
 import cn.goduck.kl.common.core.base.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(value = "kl-admin", contextId = "userFeignClient")
 public interface UserFeignClient {
 
-    @GetMapping("/users/username/{username}")
-    R<SysUserDTO> getUserByUsername(@PathVariable("username") String username);
+    @GetMapping("/user/username/{username}")
+    R<UserDTO> getUserByUsername(@PathVariable("username") String username);
 
 }

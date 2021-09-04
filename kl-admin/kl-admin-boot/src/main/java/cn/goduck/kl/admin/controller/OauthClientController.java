@@ -2,15 +2,16 @@ package cn.goduck.kl.admin.controller;
 
 import cn.goduck.kl.admin.api.OAuthClientFeignClient;
 import cn.goduck.kl.admin.entity.SysOauthClient;
+import cn.goduck.kl.admin.query.OauthClientQuery;
 import cn.goduck.kl.admin.service.SysOauthClientService;
-import cn.goduck.kl.common.core.base.BasePageQuery;
 import cn.goduck.kl.common.core.base.R;
 import cn.goduck.kl.common.core.constant.StrConstant;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ import java.util.Arrays;
  */
 @Api(tags = "客户端接口")
 @RestController
-@RequestMapping("/oauthClients")
+@RequestMapping("/oauthClient")
 @AllArgsConstructor
 public class OauthClientController implements OAuthClientFeignClient {
 
@@ -31,9 +32,10 @@ public class OauthClientController implements OAuthClientFeignClient {
 
     @ApiOperation(value = "列表分页")
     @GetMapping
-    public R<IPage<SysOauthClient>> list(@ApiParam("条件分页请求入参") BasePageQuery query, @ApiParam("客户端id") String clientId) {
+    public R<IPage<SysOauthClient>> page(OauthClientQuery oauthClientQuery) {
+        String clientId = oauthClientQuery.getClientId();
         IPage<SysOauthClient> page = sysOauthClientService.page(
-                new Page<>(query.getPageNum(), query.getPageSize()),
+                oauthClientQuery.page(),
                 new LambdaQueryWrapper<SysOauthClient>().like(StrUtil.isNotBlank(clientId), SysOauthClient::getClientId, clientId));
         return R.ok(page);
     }

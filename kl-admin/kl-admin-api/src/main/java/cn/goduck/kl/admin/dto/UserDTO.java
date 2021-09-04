@@ -11,7 +11,7 @@ import java.util.List;
  * @see cn.goduck.kl.admin.entity.SysUser
  */
 @Data
-public class SysUserDTO {
+public class UserDTO {
 
     private Long id;
 

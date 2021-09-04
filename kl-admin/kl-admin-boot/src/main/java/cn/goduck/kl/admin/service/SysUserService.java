@@ -1,7 +1,9 @@
 package cn.goduck.kl.admin.service;
 
-import cn.goduck.kl.admin.dto.SysUserDTO;
+import cn.goduck.kl.admin.dto.UserDTO;
 import cn.goduck.kl.admin.entity.SysUser;
+import cn.goduck.kl.admin.query.UserQuery;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysUserService extends IService<SysUser> {
 
-    SysUserDTO getByUsername(String username);
+    UserDTO getByUsername(String username);
+
+    IPage<SysUser> page(UserQuery userQuery);
 
 }

@@ -1,14 +1,16 @@
 package cn.goduck.kl.admin.controller;
 
 import cn.goduck.kl.admin.api.UserFeignClient;
-import cn.goduck.kl.admin.dto.SysUserDTO;
+import cn.goduck.kl.admin.dto.UserDTO;
 import cn.goduck.kl.admin.entity.SysUser;
+import cn.goduck.kl.admin.query.UserQuery;
 import cn.goduck.kl.admin.service.SysPermissionService;
 import cn.goduck.kl.admin.service.SysUserService;
 import cn.goduck.kl.admin.vo.UserVO;
 import cn.goduck.kl.common.core.base.R;
 import cn.goduck.kl.common.core.util.JwtUtil;
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,7 +29,7 @@ import java.util.List;
  */
 @Api(tags = "用户接口")
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @AllArgsConstructor
 public class UserController implements UserFeignClient {
 
@@ -37,9 +39,9 @@ public class UserController implements UserFeignClient {
     @ApiOperation(value = "根据用户名获取用户信息")
     @GetMapping("/username/{username}")
     @Override
-    public R<SysUserDTO> getUserByUsername(@PathVariable @ApiParam("用户名") String username) {
-        SysUserDTO sysUserDTO = sysUserService.getByUsername(username);
-        return R.ok(sysUserDTO);
+    public R<UserDTO> getUserByUsername(@PathVariable @ApiParam("用户名") String username) {
+        UserDTO userDTO = sysUserService.getByUsername(username);
+        return R.ok(userDTO);
     }
 
     @ApiOperation(value = "获取当前登陆的用户信息")
@@ -57,6 +59,12 @@ public class UserController implements UserFeignClient {
         List<String> perms = sysPermissionService.listBtnPermByRoles(roles);
         userVO.setPerms(perms);
         return R.ok(userVO);
+    }
+
+    @ApiOperation(value = "列表分页")
+    @GetMapping
+    public R<IPage<SysUser>> page(UserQuery userQuery) {
+        return R.ok(sysUserService.page(userQuery));
     }
 
 }

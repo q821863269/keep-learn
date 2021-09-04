@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.goduck.kl.admin.mapper.SysUserMapper">
 
-    <resultMap id="BaseResultMap" type="cn.goduck.kl.admin.dto.SysUserDTO">
+    <resultMap id="BaseResultMap" type="cn.goduck.kl.admin.dto.UserDTO">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
@@ -26,6 +26,45 @@
         left join sys_role t3 on t2.role_id = t3.id
         where t1.deleted = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
         and t1.username = #{username}
+    </select>
+
+    <select id="page" resultType="cn.goduck.kl.admin.entity.SysUser">
+        select
+            t1.id,
+            t1.dept_id,
+            t1.username,
+            t1.nickname,
+            t1.gender,
+            -- t1.password,
+            t1.avatar,
+            t1.mobile,
+            t1.email,
+            t1.status,
+            -- t1.deleted,
+            t1.create_by,
+            t1.create_time,
+            t1.update_by,
+            t1.update_time,
+            t2.name as dept_name,
+            GROUP_CONCAT(t4.name) as role_names
+        from sys_user t1
+        left join sys_dept t2 on t1.dept_id = t2.id
+        left join sys_user_role t3 on t1.id = t3.user_id
+        left join sys_role t4 on t3.role_id = t4.id
+        where t1.deleted = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
+        <if test="query.nickname != null and query.nickname != ''">
+            and t1.nickname like CONCAT('%',#{query.nickname},'%')
+        </if>
+        <if test="query.mobile != null and query.mobile != ''">
+            and t1.mobile like CONCAT('%',#{query.mobile},'%')
+        </if>
+        <if test="query.status != null">
+            and t1.status = #{query.status}
+        </if>
+        <if test="query.deptId != null">
+            and concat(',',concat(t2.tree_path,',',t2.id),',') like CONCAT('%,',#{query.deptId},',%')
+        </if>
+        group by t1.id
     </select>
 
 </mapper>

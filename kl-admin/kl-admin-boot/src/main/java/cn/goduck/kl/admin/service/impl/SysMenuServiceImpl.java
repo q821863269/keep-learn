@@ -39,7 +39,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      */
     private List<RouteVO> recursionRoute(Long parentId, List<SysMenuVO> menuList) {
         List<RouteVO> list = new ArrayList<>();
-        Optional.ofNullable(menuList).ifPresent(menus -> menus.stream().filter(menu -> parentId.equals(menu.getParentId()))
+        Optional.ofNullable(menuList).ifPresent(menus -> menus
+                .stream()
+                .filter(menu -> parentId.equals(menu.getParentId()))
                 .forEach(menu -> {
                     RouteVO routeVO = new RouteVO();
                     routeVO.setPath(menu.getRoutePath());

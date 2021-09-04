@@ -6,7 +6,7 @@
     <!--@Table sys_dept-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
     <result column="tree_path" jdbcType="VARCHAR" property="treePath" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="status" jdbcType="BOOLEAN" property="status" />

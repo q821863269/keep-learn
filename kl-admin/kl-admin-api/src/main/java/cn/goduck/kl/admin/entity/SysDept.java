@@ -32,7 +32,7 @@ public class SysDept extends BaseEntity {
      */
     @TableField(value = "parent_id")
     @ApiModelProperty(value = "父节点id")
-    private Integer parentId;
+    private Long parentId;
 
     /**
      * 父节点id路径

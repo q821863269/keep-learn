@@ -74,7 +74,7 @@ public class JwtUtil {
             List<String> list = payload.get(AuthConstant.JWT_AUTHORITIES_KEY, List.class);
             return new ArrayList<>(list);
         }
-        return null;
+        return new ArrayList<>();
     }
 
 }

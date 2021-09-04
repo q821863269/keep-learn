@@ -3,6 +3,8 @@ package cn.goduck.kl.admin.service;
 import cn.goduck.kl.admin.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * Desc:
  * Author: Kon
@@ -10,5 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysRoleService extends IService<SysRole> {
 
+    List<SysRole> roleList();
 
 }

@@ -89,4 +89,15 @@ public class SysUser extends BaseEntity {
     @TableField(value = "deleted")
     @ApiModelProperty(value="删除标识（0未删除 1已删除）")
     private Boolean deleted;
+
+    // ============================================附加字段============================================
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="部门名称")
+    private String deptName;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="角色名称 “,“逗号分隔")
+    private String roleNames;
+
 }
