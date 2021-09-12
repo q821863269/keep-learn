@@ -17,6 +17,7 @@ import java.util.List;
  * Date: 2021/6/25 16:34
  */
 @Service
+@SuppressWarnings("unchecked")
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
 
     @Override

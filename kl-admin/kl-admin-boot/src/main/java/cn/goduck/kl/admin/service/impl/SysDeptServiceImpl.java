@@ -24,6 +24,7 @@ import java.util.Optional;
  * Date: 2021/6/25 16:34
  */
 @Service
+@SuppressWarnings("unchecked")
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
 
     @Override
