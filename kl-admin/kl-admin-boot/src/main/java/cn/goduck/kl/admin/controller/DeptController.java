@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Api(tags = "部门接口")
 @RestController
-@RequestMapping("/dept")
+@RequestMapping("/depts")
 @AllArgsConstructor
 public class DeptController {
 

@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "客户端列表查询")
-public class OauthClientQuery extends BasePageQuery<SysOauthClient> {
+public class SysOauthClientQuery extends BasePageQuery<SysOauthClient> {
 
     @ApiModelProperty(value = "昵称")
     private String clientId;

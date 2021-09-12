@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * Desc: 用户信息表
  * Author: Kon
@@ -41,10 +43,10 @@ public class SysUser extends BaseEntity {
     private String nickname;
 
     /**
-     * 性别（0女 1男 2未知）
+     * 性别
      */
     @TableField(value = "gender")
-    @ApiModelProperty(value="性别（0女 1男 2未知）")
+    @ApiModelProperty(value="性别")
     private Integer gender;
 
     /**
@@ -65,7 +67,7 @@ public class SysUser extends BaseEntity {
      * 联系方式
      */
     @TableField(value = "mobile")
-    @ApiModelProperty(value="联系方式")
+    @ApiModelProperty(value="手机号码")
     private String mobile;
 
     /**
@@ -76,10 +78,10 @@ public class SysUser extends BaseEntity {
     private String email;
 
     /**
-     * 用户状态（0正常 1禁用）
+     * 用户状态
      */
     @TableField(value = "`status`")
-    @ApiModelProperty(value="用户状态（0正常 1禁用）")
+    @ApiModelProperty(value="用户状态")
     private Boolean status;
 
     /**
@@ -99,5 +101,9 @@ public class SysUser extends BaseEntity {
     @TableField(exist = false)
     @ApiModelProperty(value="角色名称 “,“逗号分隔")
     private String roleNames;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="角色id “,“逗号分隔")
+    private List<Long> roleIds;
 
 }

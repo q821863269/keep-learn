@@ -2,7 +2,7 @@ package cn.goduck.kl.admin.controller;
 
 import cn.goduck.kl.admin.api.OAuthClientFeignClient;
 import cn.goduck.kl.admin.entity.SysOauthClient;
-import cn.goduck.kl.admin.query.OauthClientQuery;
+import cn.goduck.kl.admin.query.SysOauthClientQuery;
 import cn.goduck.kl.admin.service.SysOauthClientService;
 import cn.goduck.kl.common.core.base.R;
 import cn.goduck.kl.common.core.constant.StrConstant;
@@ -24,7 +24,7 @@ import java.util.Arrays;
  */
 @Api(tags = "客户端接口")
 @RestController
-@RequestMapping("/oauthClient")
+@RequestMapping("/oauthClients")
 @AllArgsConstructor
 public class OauthClientController implements OAuthClientFeignClient {
 
@@ -32,10 +32,9 @@ public class OauthClientController implements OAuthClientFeignClient {
 
     @ApiOperation(value = "列表分页")
     @GetMapping
-    public R<IPage<SysOauthClient>> page(OauthClientQuery oauthClientQuery) {
-        String clientId = oauthClientQuery.getClientId();
-        IPage<SysOauthClient> page = sysOauthClientService.page(
-                oauthClientQuery.page(),
+    public R<IPage<SysOauthClient>> page(SysOauthClientQuery sysOauthClientQuery) {
+        String clientId = sysOauthClientQuery.getClientId();
+        IPage<SysOauthClient> page = sysOauthClientService.page(sysOauthClientQuery.page(),
                 new LambdaQueryWrapper<SysOauthClient>().like(StrUtil.isNotBlank(clientId), SysOauthClient::getClientId, clientId));
         return R.ok(page);
     }
@@ -56,10 +55,9 @@ public class OauthClientController implements OAuthClientFeignClient {
 
     @ApiOperation(value = "修改客户端")
     @PutMapping(value = "/{id}")
-    public R<Object> update(
-            @PathVariable @ApiParam("id") String id,
-            @RequestBody SysOauthClient client) {
-        client.setClientId(id);
+    public R<Object> update(@PathVariable @ApiParam("id") Long id,
+                            @RequestBody SysOauthClient client) {
+        client.setId(id);
         boolean status = sysOauthClientService.updateById(client);
         return R.judge(status);
     }

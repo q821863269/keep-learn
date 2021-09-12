@@ -18,4 +18,6 @@ public interface SysDeptService extends IService<SysDept> {
 
     List<TreeVO> listSelect();
 
+    List<SysDept> deptList();
+
 }

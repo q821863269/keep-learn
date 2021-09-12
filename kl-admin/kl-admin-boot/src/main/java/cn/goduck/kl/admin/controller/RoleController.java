@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Api(tags = "角色接口")
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/roles")
 @AllArgsConstructor
 public class RoleController {
 

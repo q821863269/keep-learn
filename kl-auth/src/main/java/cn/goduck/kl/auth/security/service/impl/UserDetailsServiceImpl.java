@@ -5,12 +5,10 @@ import cn.goduck.kl.admin.dto.UserDTO;
 import cn.goduck.kl.auth.domain.OAuthUserDetails;
 import cn.goduck.kl.common.core.base.R;
 import cn.goduck.kl.common.core.constant.enums.ResultCode;
+import cn.goduck.kl.common.web.exception.BizException;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AccountExpiredException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,11 +40,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMsg());
         }
         if (!oauthUserDetails.isEnabled()) {
-            throw new DisabledException("该账户已被禁用!");
+            throw new BizException(ResultCode.USER_ACCOUNT_DISABLED);
         } else if (!oauthUserDetails.isAccountNonLocked()) {
-            throw new LockedException("该账号已被锁定!");
+            throw new BizException(ResultCode.USER_ACCOUNT_LOCKED);
         } else if (!oauthUserDetails.isAccountNonExpired()) {
-            throw new AccountExpiredException("该账号已过期!");
+            throw new BizException(ResultCode.USER_ACCOUNT_EXPIRED);
         }
         return oauthUserDetails;
     }

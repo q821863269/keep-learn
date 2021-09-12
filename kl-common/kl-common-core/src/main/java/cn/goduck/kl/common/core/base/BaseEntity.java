@@ -1,5 +1,6 @@
 package cn.goduck.kl.common.core.base;
 
+import cn.goduck.kl.common.core.util.JwtUtil;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -38,5 +39,21 @@ public class BaseEntity implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
+
+    /**
+     * 设置创建相关字段的值
+     */
+    public void setCreateFieldValue() {
+        this.setCreateBy(JwtUtil.getUserId());
+        this.setCreateTime(LocalDateTime.now());
+    }
+
+    /**
+     * 设置更新相关字段的值
+     */
+    public void setUpdateFieldValue() {
+        this.setUpdateBy(JwtUtil.getUserId());
+        this.setUpdateTime(LocalDateTime.now());
+    }
 
 }

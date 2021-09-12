@@ -17,9 +17,11 @@ import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -121,7 +123,15 @@ public class WebLogAspect {
         HashMap<String, Object> methodParameters = new HashMap<>();
         if (ObjectUtil.isNotNull(args) && ObjectUtil.isNotNull(parameterNames)) {
             for (int i = 0; i < parameterNames.length; i++) {
-                methodParameters.put(parameterNames[i], ObjectUtil.isNull(args[i]) ? StrConstant.EMPTY : args[i]);
+                if (args[i] instanceof HttpServletRequest) {
+                    methodParameters.put(parameterNames[i], HttpServletRequest.class.getName());
+                } else if (args[i] instanceof HttpServletResponse) {
+                    methodParameters.put(parameterNames[i], HttpServletResponse.class.getName());
+                } else if (args[i] instanceof MultipartFile) {
+                    methodParameters.put(parameterNames[i], MultipartFile.class.getName());
+                } else {
+                    methodParameters.put(parameterNames[i], ObjectUtil.isNull(args[i]) ? StrConstant.EMPTY : args[i]);
+                }
             }
         }
         return methodParameters;

@@ -1,6 +1,7 @@
 package cn.goduck.kl.gateway.util;
 
 import cn.goduck.kl.common.core.base.R;
+import cn.hutool.core.util.CharsetUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class GatewayResponseUtils {
     }
 
     public static DataBuffer buildDataBuffer(ServerHttpResponse serverHttpResponse, R<Object> r) {
-        byte[] result = JSONObject.toJSONString(r).getBytes();
+        byte[] result = JSONObject.toJSONString(r).getBytes(CharsetUtil.CHARSET_UTF_8);
         return serverHttpResponse.bufferFactory().wrap(result);
     }
 

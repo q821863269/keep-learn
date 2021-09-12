@@ -91,4 +91,12 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         return deptSelectList;
     }
 
+    @Override
+    public List<SysDept> deptList() {
+        LambdaQueryWrapper<SysDept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(SysDept::getStatus, GlobalConstant.VALID);
+        lambdaQueryWrapper.orderByAsc(SysDept::getSort);
+        return this.list(lambdaQueryWrapper);
+    }
+
 }

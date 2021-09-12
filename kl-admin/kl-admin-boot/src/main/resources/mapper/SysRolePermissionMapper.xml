@@ -4,11 +4,16 @@
   <resultMap id="BaseResultMap" type="cn.goduck.kl.admin.entity.SysRolePermission">
     <!--@mbg.generated-->
     <!--@Table sys_role_permission-->
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="permission_id" jdbcType="BIGINT" property="permissionId" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    role_id, permission_id
+    id, role_id, permission_id, create_by, create_time, update_by, update_time
   </sql>
 </mapper>

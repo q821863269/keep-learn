@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 10101
 
 spring:
 # 解决：The bean 'conversionServicePostProcessor',

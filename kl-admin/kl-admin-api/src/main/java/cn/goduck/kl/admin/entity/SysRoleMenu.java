@@ -1,10 +1,12 @@
 package cn.goduck.kl.admin.entity;
 
+import cn.goduck.kl.common.core.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Desc: 角色和菜单关联表
@@ -13,8 +15,9 @@ import lombok.Data;
  */
 @ApiModel(value = "cn-goduck-kl-admin-entity-SysRoleMenu")
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "sys_role_menu")
-public class SysRoleMenu {
+public class SysRoleMenu extends BaseEntity {
     /**
      * 角色id
      */

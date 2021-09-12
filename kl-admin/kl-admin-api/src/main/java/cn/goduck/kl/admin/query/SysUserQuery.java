@@ -15,12 +15,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "用户列表查询")
-public class UserQuery extends BasePageQuery<SysUser> {
+public class SysUserQuery extends BasePageQuery<SysUser> {
 
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
-    @ApiModelProperty(value = "联系方式")
+    @ApiModelProperty(value = "手机号码")
     private String mobile;
 
     @ApiModelProperty(value = "状态（0-正常 1-禁用）")

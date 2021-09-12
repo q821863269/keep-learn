@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Api(tags = "菜单接口")
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/menus")
 @AllArgsConstructor
 public class MenuController {
 
