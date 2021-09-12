@@ -15,7 +15,7 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 public class StatusConverter implements Converter<Boolean> {
 
     @Override
-    public Class supportJavaTypeKey() {
+    public Class<Boolean> supportJavaTypeKey() {
         return Boolean.class;
     }
 

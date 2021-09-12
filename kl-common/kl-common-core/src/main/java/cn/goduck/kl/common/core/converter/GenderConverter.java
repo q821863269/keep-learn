@@ -15,7 +15,7 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 public class GenderConverter implements Converter<Integer> {
 
     @Override
-    public Class supportJavaTypeKey() {
+    public Class<Integer> supportJavaTypeKey() {
         return Integer.class;
     }
 

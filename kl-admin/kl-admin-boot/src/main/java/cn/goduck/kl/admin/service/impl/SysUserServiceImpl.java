@@ -114,12 +114,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 删除用户角色
         List<Long> removeRoleIdList = dbRoleIdList.stream().filter(roleId -> !userRoleIdList.contains(roleId)).collect(Collectors.toList());
         if (CollectionUtil.isNotEmpty(removeRoleIdList)) {
-            removeRoleIdList.forEach(roleId -> {
-                sysUserRoleService.remove(
-                        new LambdaQueryWrapper<SysUserRole>()
-                                .eq(SysUserRole::getUserId, userId)
-                                .eq(SysUserRole::getRoleId, roleId));
-            });
+            removeRoleIdList.forEach(roleId -> sysUserRoleService.remove(
+                    new LambdaQueryWrapper<SysUserRole>()
+                            .eq(SysUserRole::getUserId, userId)
+                            .eq(SysUserRole::getRoleId, roleId)));
         }
         // 更新用户
         sysUser.setUpdateFieldValue();

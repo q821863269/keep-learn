@@ -12,6 +12,6 @@ keep-learn
     ├── kl-admin-boot -- 系统管理服务（8100）
 ├── kl-auth           -- 认证中心服务（8000）【OAuth2认证服务器】
 ├── kl-common         -- 公共模块
-├── kl-gateway        -- Gateway网关（8080）【OAuth2资源服务器】
+├── kl-gateway        -- Gateway网关（10101）【OAuth2资源服务器】
 └── kl-test-boot      -- boot单体服务（9999）
 ```
