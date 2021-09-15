@@ -1,15 +1,18 @@
 package cn.goduck.kl.admin.controller;
 
+import cn.goduck.kl.admin.entity.SysDept;
+import cn.goduck.kl.admin.query.SysDeptQuery;
 import cn.goduck.kl.admin.service.SysDeptService;
 import cn.goduck.kl.admin.vo.DeptVO;
 import cn.goduck.kl.admin.vo.TreeVO;
 import cn.goduck.kl.common.core.base.R;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,19 +28,50 @@ public class DeptController {
 
     private final SysDeptService sysDeptService;
 
+    @ApiOperation(value = "部门下拉（Select）层级列表")
+    @GetMapping("/select")
+    public R<List<TreeVO>> getSelectList(@ApiParam(value = "是否添加顶级") @RequestParam(required = false) Boolean addTop) {
+        List<TreeVO> deptSelectList = sysDeptService.listSelect();
+        if (Boolean.TRUE.equals(addTop)) {
+            TreeVO treeVO = new TreeVO(0L, "无", deptSelectList);
+            deptSelectList = new ArrayList<>();
+            deptSelectList.add(treeVO);
+        }
+        return R.ok(deptSelectList);
+    }
+
     @ApiOperation(value = "部门表格（Table）层级列表")
     @GetMapping("/table")
-    public R<List<DeptVO>> getTableList(@ApiParam("部门状态") Integer status,
-                                        @ApiParam("部门名称") String name) {
-        List<DeptVO> deptTableList = sysDeptService.listTable(status, name);
+    public R<List<DeptVO>> getTableList(SysDeptQuery sysDeptQuery) {
+        List<DeptVO> deptTableList = sysDeptService.listTable(sysDeptQuery);
         return R.ok(deptTableList);
     }
 
-    @ApiOperation(value = "部门下拉（Select）层级列表")
-    @GetMapping("/select")
-    public R<List<TreeVO>> getSelectList() {
-        List<TreeVO> deptSelectList = sysDeptService.listSelect();
-        return R.ok(deptSelectList);
+    @ApiOperation(value = "部门详情")
+    @GetMapping("/{id}")
+    public R<SysDept> detail(@PathVariable @ApiParam("id") Long id) {
+        return R.ok(sysDeptService.getById(id));
+    }
+
+    @ApiOperation(value = "新增部门")
+    @PostMapping
+    public R<Object> add(@RequestBody SysDept sysDept) {
+        return R.judge(sysDeptService.saveDept(sysDept));
+    }
+
+    @ApiOperation(value = "修改部门")
+    @PutMapping(value = "/{id}")
+    public R<Object> update(@PathVariable @ApiParam("id") Long id,
+                            @RequestBody SysDept sysDept) {
+        sysDept.setId(id);
+        return R.judge(sysDeptService.saveDept(sysDept));
+    }
+
+    @ApiOperation(value = "删除部门")
+    @DeleteMapping("/{ids}")
+    public R<Object> delete(@PathVariable("ids") @ApiParam("id集合,以,拼接字符串") String ids) {
+        boolean status = sysDeptService.deleteByIds(ids);
+        return R.judge(status);
     }
 
 }

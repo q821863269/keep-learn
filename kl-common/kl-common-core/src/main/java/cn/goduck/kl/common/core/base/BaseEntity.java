@@ -1,6 +1,7 @@
 package cn.goduck.kl.common.core.base;
 
 import cn.goduck.kl.common.core.util.JwtUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -54,6 +55,17 @@ public class BaseEntity implements Serializable {
     public void setUpdateFieldValue() {
         this.setUpdateBy(JwtUtil.getUserId());
         this.setUpdateTime(LocalDateTime.now());
+    }
+
+    /**
+     * 根据id设置默认字段值
+     */
+    public void setDefaultFieldValue() {
+        if (ObjectUtil.isNull(id)) {
+            setCreateFieldValue();
+        } else {
+            setUpdateFieldValue();
+        }
     }
 
 }

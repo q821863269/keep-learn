@@ -2,6 +2,7 @@ package cn.goduck.kl.admin.vo;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -12,17 +13,19 @@ import java.util.List;
 @Data
 public class DeptVO {
 
-    private Integer id;
+    private Long id;
 
     private String name;
 
-    private Integer parentId;
+    private Long parentId;
 
     private String treePath;
 
     private Integer sort;
 
-    private Integer status;
+    private Boolean status;
+
+    private LocalDateTime updateTime;
 
     private List<DeptVO> children;
 

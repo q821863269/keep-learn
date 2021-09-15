@@ -33,7 +33,7 @@ public class SwaggerConfiguration {
         //schema
         List<GrantType> grantTypes = new ArrayList<>();
         //密码模式
-        String passwordTokenUrl = "http://localhost:8080/auth/oauth/token";
+        String passwordTokenUrl = "http://localhost:10101/auth/oauth/token";
         ResourceOwnerPasswordCredentialsGrant resourceOwnerPasswordCredentialsGrant = new ResourceOwnerPasswordCredentialsGrant(passwordTokenUrl);
         grantTypes.add(resourceOwnerPasswordCredentialsGrant);
         OAuth oAuth = new OAuthBuilder().name("oauth2").grantTypes(grantTypes).build();

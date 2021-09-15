@@ -1,6 +1,7 @@
 package cn.goduck.kl.admin.service;
 
 import cn.goduck.kl.admin.entity.SysDept;
+import cn.goduck.kl.admin.query.SysDeptQuery;
 import cn.goduck.kl.admin.vo.DeptVO;
 import cn.goduck.kl.admin.vo.TreeVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -14,10 +15,14 @@ import java.util.List;
  */
 public interface SysDeptService extends IService<SysDept> {
 
-    List<DeptVO> listTable(Integer status, String name);
+    List<DeptVO> listTable(SysDeptQuery sysDeptQuery);
 
     List<TreeVO> listSelect();
 
     List<SysDept> deptList();
+
+    boolean saveDept(SysDept sysDept);
+
+    boolean deleteByIds(String ids);
 
 }

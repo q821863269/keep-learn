@@ -26,7 +26,7 @@ spring:
 #   oauth2:
 #     resourceserver:
 #       jwt:
-#         jwk-set-uri: 'http://localhost:8080/auth/oauth/publicKey'
+#         jwk-set-uri: 'http://localhost:10101/auth/oauth/publicKey'
 
   cloud:
     nacos:
