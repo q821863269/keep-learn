@@ -1,7 +1,6 @@
 package cn.goduck.kl.admin.mapper;
 
 import cn.goduck.kl.admin.entity.SysMenu;
-import cn.goduck.kl.admin.vo.SysMenuVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;
@@ -13,6 +12,6 @@ import java.util.List;
  */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
-    List<SysMenuVO> menuList();
+    List<SysMenu> menuList();
 
 }

@@ -26,7 +26,7 @@
     deleted, create_by, create_time, update_by, update_time
   </sql>
 
-  <resultMap id="SysMenuVOMap" type="cn.goduck.kl.admin.vo.SysMenuVO">
+  <resultMap id="SysMenuMap" type="cn.goduck.kl.admin.entity.SysMenu">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
@@ -42,7 +42,7 @@
     </collection>
   </resultMap>
 
-  <select id="menuList" resultMap="SysMenuVOMap">
+  <select id="menuList" resultMap="SysMenuMap">
     select
       t1.id,
       t1.name,

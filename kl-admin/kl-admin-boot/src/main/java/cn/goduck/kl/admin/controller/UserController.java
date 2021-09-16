@@ -78,7 +78,6 @@ public class UserController implements UserFeignClient {
     @PutMapping(value = "/{id}")
     public R<Object> update(@PathVariable @ApiParam("id") Long id,
                             @RequestBody SysUser sysUser) {
-        sysUser.setId(id);
         boolean status = sysUserService.updateUser(sysUser);
         return R.judge(status);
     }
@@ -87,7 +86,6 @@ public class UserController implements UserFeignClient {
     @PatchMapping(value = "/{id}")
     public R<Object> patch(@PathVariable @ApiParam("id") Long id,
                            @RequestBody SysUser sysUser) {
-        sysUser.setId(id);
         boolean status = sysUserService.patchUser(sysUser);
         return R.judge(status);
     }

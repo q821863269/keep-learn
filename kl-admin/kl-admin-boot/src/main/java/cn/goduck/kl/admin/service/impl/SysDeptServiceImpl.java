@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
 
     @Override
-    public List<DeptVO> listTable(SysDeptQuery sysDeptQuery) {
+    public List<DeptVO> tableList(SysDeptQuery sysDeptQuery) {
         LambdaQueryWrapper<SysDept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(StrUtil.isNotBlank(sysDeptQuery.getName()), SysDept::getName, sysDeptQuery.getName());
         lambdaQueryWrapper.eq(ObjectUtil.isNotNull(sysDeptQuery.getStatus()), SysDept::getStatus, sysDeptQuery.getStatus());
@@ -66,7 +66,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     @Override
-    public List<TreeVO> listSelect() {
+    public List<TreeVO> selectList() {
         LambdaQueryWrapper<SysDept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(SysDept::getStatus, GlobalConstant.VALID);
         lambdaQueryWrapper.orderByAsc(SysDept::getSort);

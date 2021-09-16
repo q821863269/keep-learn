@@ -31,7 +31,7 @@ public class DeptController {
     @ApiOperation(value = "部门下拉（Select）层级列表")
     @GetMapping("/select")
     public R<List<TreeVO>> getSelectList(@ApiParam(value = "是否添加顶级") @RequestParam(required = false) Boolean addTop) {
-        List<TreeVO> deptSelectList = sysDeptService.listSelect();
+        List<TreeVO> deptSelectList = sysDeptService.selectList();
         if (Boolean.TRUE.equals(addTop)) {
             TreeVO treeVO = new TreeVO(0L, "无", deptSelectList);
             deptSelectList = new ArrayList<>();
@@ -43,7 +43,7 @@ public class DeptController {
     @ApiOperation(value = "部门表格（Table）层级列表")
     @GetMapping("/table")
     public R<List<DeptVO>> getTableList(SysDeptQuery sysDeptQuery) {
-        List<DeptVO> deptTableList = sysDeptService.listTable(sysDeptQuery);
+        List<DeptVO> deptTableList = sysDeptService.tableList(sysDeptQuery);
         return R.ok(deptTableList);
     }
 
@@ -63,7 +63,6 @@ public class DeptController {
     @PutMapping(value = "/{id}")
     public R<Object> update(@PathVariable @ApiParam("id") Long id,
                             @RequestBody SysDept sysDept) {
-        sysDept.setId(id);
         return R.judge(sysDeptService.saveDept(sysDept));
     }
 

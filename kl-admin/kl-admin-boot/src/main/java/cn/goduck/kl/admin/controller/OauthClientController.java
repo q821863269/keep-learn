@@ -57,7 +57,6 @@ public class OauthClientController implements OAuthClientFeignClient {
     @PutMapping(value = "/{id}")
     public R<Object> update(@PathVariable @ApiParam("id") Long id,
                             @RequestBody SysOauthClient client) {
-        client.setId(id);
         boolean status = sysOauthClientService.updateById(client);
         return R.judge(status);
     }

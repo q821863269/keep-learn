@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * Desc: 菜单管理
  * Author: Kon
@@ -90,4 +92,11 @@ public class SysMenu extends BaseEntity {
     @TableField(value = "deleted")
     @ApiModelProperty(value = "删除标识（0未删除 1已删除）")
     private Boolean deleted;
+
+    // ============================================附加字段============================================
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "角色集合")
+    private List<String> roles;
+
 }

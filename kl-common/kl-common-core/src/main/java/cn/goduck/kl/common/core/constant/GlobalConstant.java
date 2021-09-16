@@ -41,12 +41,12 @@ public class GlobalConstant {
     public static final String ROOT_ROLE_CODE = "ROOT";
 
     /**
-     * 根部门ID
+     * 根部门id
      */
     public static final Long DEPT_ROOT_ID = 0L;
 
     /**
-     * 根菜单ID
+     * 根菜单id
      */
     public static final Long MENU_ROOT_ID = 0L;
 

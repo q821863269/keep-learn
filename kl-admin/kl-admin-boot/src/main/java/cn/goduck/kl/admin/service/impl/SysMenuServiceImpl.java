@@ -2,11 +2,16 @@ package cn.goduck.kl.admin.service.impl;
 
 import cn.goduck.kl.admin.entity.SysMenu;
 import cn.goduck.kl.admin.mapper.SysMenuMapper;
+import cn.goduck.kl.admin.query.SysMenuQuery;
 import cn.goduck.kl.admin.service.SysMenuService;
 import cn.goduck.kl.admin.vo.RouteVO;
-import cn.goduck.kl.admin.vo.SysMenuVO;
+import cn.goduck.kl.admin.vo.MenuVO;
+import cn.goduck.kl.admin.vo.TreeVO;
 import cn.goduck.kl.common.core.constant.GlobalConstant;
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -21,24 +26,25 @@ import java.util.Optional;
  * Date: 2021/6/25 16:34
  */
 @Service
+@SuppressWarnings("unchecked")
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
 
     @Override
-    @Cacheable(value = "admin", key = "'routerList'")
+    @Cacheable(value = "admin", key = "'routeList'")
     public List<RouteVO> routeList() {
-        List<SysMenuVO> menuList = this.baseMapper.menuList();
+        List<SysMenu> menuList = this.baseMapper.menuList();
         return recursionRoute(GlobalConstant.MENU_ROOT_ID, menuList);
     }
 
     /**
      * 递归生成菜单路由层级列表
      *
-     * @param parentId 父级ID
+     * @param parentId 父级id
      * @param menuList 菜单列表
      * @return 菜单路由层级列表
      */
-    private List<RouteVO> recursionRoute(Long parentId, List<SysMenuVO> menuList) {
-        List<RouteVO> list = new ArrayList<>();
+    private List<RouteVO> recursionRoute(Long parentId, List<SysMenu> menuList) {
+        List<RouteVO> menuRouteList = new ArrayList<>();
         Optional.ofNullable(menuList).ifPresent(menus -> menus
                 .stream()
                 .filter(menu -> parentId.equals(menu.getParentId()))
@@ -56,9 +62,72 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                     if (CollectionUtil.isNotEmpty(children)) {
                         routeVO.setAlwaysShow(Boolean.TRUE);
                     }
-                    list.add(routeVO);
+                    menuRouteList.add(routeVO);
                 }));
-        return list;
+        return menuRouteList;
+    }
+
+    @Override
+    public List<TreeVO> selectList() {
+        List<SysMenu> menuList = this.list(new LambdaQueryWrapper<SysMenu>().orderByAsc(SysMenu::getSort));
+        return recursionSelectList(GlobalConstant.MENU_ROOT_ID, menuList);
+    }
+
+    /**
+     * 递归生成菜单下拉层级列表
+     *
+     * @param parentId 父级id
+     * @param menuList 菜单列表
+     * @return 菜单下拉层级列表
+     */
+    private static List<TreeVO> recursionSelectList(Long parentId, List<SysMenu> menuList) {
+        List<TreeVO> menuSelectList = new ArrayList<>();
+        Optional.ofNullable(menuList).orElse(new ArrayList<>())
+                .stream()
+                .filter(menu -> parentId.equals(menu.getParentId()))
+                .forEach(menu -> {
+                    TreeVO treeVO = new TreeVO();
+                    treeVO.setId(menu.getId());
+                    treeVO.setLabel(menu.getName());
+                    List<TreeVO> children = recursionSelectList(menu.getId(), menuList);
+                    if (CollectionUtil.isNotEmpty(children)) {
+                        treeVO.setChildren(children);
+                    }
+                    menuSelectList.add(treeVO);
+                });
+        return menuSelectList;
+    }
+
+    @Override
+    public List<MenuVO> tableList(SysMenuQuery sysMenuQuery) {
+        List<SysMenu> menuList = this.list(new LambdaQueryWrapper<SysMenu>()
+                .like(StrUtil.isNotBlank(sysMenuQuery.getName()), SysMenu::getName, sysMenuQuery.getName())
+                .orderByAsc(SysMenu::getSort));
+        return recursionTableList(GlobalConstant.MENU_ROOT_ID, menuList);
+    }
+
+    /**
+     * 递归生成菜单表格层级列表
+     *
+     * @param parentId 父级id
+     * @param menuList 菜单列表
+     * @return 表格层级列表
+     */
+    private static List<MenuVO> recursionTableList(Long parentId, List<SysMenu> menuList) {
+        List<MenuVO> menuTableList = new ArrayList<>();
+        Optional.ofNullable(menuList).orElse(new ArrayList<>())
+                .stream()
+                .filter(menu -> menu.getParentId().equals(parentId))
+                .forEach(menu -> {
+                    MenuVO menuVO = new MenuVO();
+                    BeanUtil.copyProperties(menu, menuVO);
+                    List<MenuVO> children = recursionTableList(menu.getId(), menuList);
+                    if (CollectionUtil.isNotEmpty(children)) {
+                        menuVO.setChildren(children);
+                    }
+                    menuTableList.add(menuVO);
+                });
+        return menuTableList;
     }
 
 }
