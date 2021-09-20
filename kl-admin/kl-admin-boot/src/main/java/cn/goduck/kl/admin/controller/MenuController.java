@@ -5,9 +5,10 @@ import cn.goduck.kl.admin.query.SysMenuQuery;
 import cn.goduck.kl.admin.service.SysMenuService;
 import cn.goduck.kl.admin.vo.MenuVO;
 import cn.goduck.kl.admin.vo.RouteVO;
-import cn.goduck.kl.admin.vo.TreeVO;
 import cn.goduck.kl.common.core.base.R;
 import cn.goduck.kl.common.core.constant.StrConstant;
+import cn.goduck.kl.common.core.util.TreeUtil;
+import cn.goduck.kl.common.core.vo.TreeVO;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import io.swagger.annotations.Api;
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,9 +44,12 @@ public class MenuController {
 
     @ApiOperation(value = "菜单下拉（Select）层级列表")
     @GetMapping("/select")
-    public R<List<TreeVO>> getMenuSelectList() {
-        List<TreeVO> treeVOList = sysMenuService.selectList();
-        return R.ok(treeVOList);
+    public R<List<TreeVO>> getMenuSelectList(@ApiParam(value = "是否添加顶级") @RequestParam(required = false) Boolean addTop) {
+        List<TreeVO> menuSelectList = sysMenuService.selectList();
+        if (Boolean.TRUE.equals(addTop)) {
+            menuSelectList = TreeUtil.addTop(menuSelectList);
+        }
+        return R.ok(menuSelectList);
     }
 
     @ApiOperation(value = "菜单表格（Table）层级列表")

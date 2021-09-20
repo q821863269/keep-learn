@@ -4,15 +4,15 @@ import cn.goduck.kl.admin.entity.SysDept;
 import cn.goduck.kl.admin.query.SysDeptQuery;
 import cn.goduck.kl.admin.service.SysDeptService;
 import cn.goduck.kl.admin.vo.DeptVO;
-import cn.goduck.kl.admin.vo.TreeVO;
 import cn.goduck.kl.common.core.base.R;
+import cn.goduck.kl.common.core.util.TreeUtil;
+import cn.goduck.kl.common.core.vo.TreeVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,9 +33,7 @@ public class DeptController {
     public R<List<TreeVO>> getSelectList(@ApiParam(value = "是否添加顶级") @RequestParam(required = false) Boolean addTop) {
         List<TreeVO> deptSelectList = sysDeptService.selectList();
         if (Boolean.TRUE.equals(addTop)) {
-            TreeVO treeVO = new TreeVO(0L, "无", deptSelectList);
-            deptSelectList = new ArrayList<>();
-            deptSelectList.add(treeVO);
+            deptSelectList = TreeUtil.addTop(deptSelectList);
         }
         return R.ok(deptSelectList);
     }

@@ -41,16 +41,25 @@
 
   <select id="page" resultType="cn.goduck.kl.admin.entity.SysPermission">
     select
-        <include refid="Base_Column_List" />
+        t1.id,
+        t1.`name`,
+        t1.menu_id,
+        t1.url_perm,
+        t1.btn_perm,
+        t1.deleted,
+        t1.create_by,
+        t1.create_time,
+        t1.update_by,
+        t1.update_time
     from sys_permission t1
     left join sys_menu t2 on t1.menu_id = t2.id
     where t1.deleted = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
     and t2.deleted = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
     <if test="sysPermissionQuery.menuId != null">
-      and t1.menu_id = #{permission.menuId}
+      and t1.menu_id = #{sysPermissionQuery.menuId}
     </if>
     <if test="sysPermissionQuery.name != null and sysPermissionQuery.name != ''">
-      and t1.name like concat('%',#{permission.name},'%')
+      and t1.name like concat('%',#{sysPermissionQuery.name},'%')
     </if>
     order by t1.update_time desc
   </select>
@@ -58,7 +67,7 @@
   <select id="permRolesList" resultMap="BaseResultMap">
     SELECT
         t1.id,
-        t1.naem,
+        t1.name,
         t1.menu_id,
         t1.url_perm,
         t1.btn_perm,

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class UrlPermRolesLocalCache {
 
-    private Cache<String, Map<String, String>> localCache = null;
+    private Cache<String, Map<String, List<String>>> localCache = null;
 
     @PostConstruct
     private void init() {
@@ -31,11 +32,11 @@ public class UrlPermRolesLocalCache {
                 .expireAfterWrite(300, TimeUnit.SECONDS).build();
     }
 
-    public void setLocalCache(String key, Map<String, String> object) {
+    public void setLocalCache(String key, Map<String, List<String>> object) {
         localCache.put(key, object);
     }
 
-    public Map<String, String> getCache(String key) {
+    public Map<String, List<String>> getCache(String key) {
         return localCache.getIfPresent(key);
     }
 

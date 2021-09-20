@@ -1,4 +1,4 @@
-package cn.goduck.kl.admin.vo;
+package cn.goduck.kl.common.core.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -7,6 +7,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Desc:
+ * Author: Kon
+ * Date: 2021/9/19 15:54
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

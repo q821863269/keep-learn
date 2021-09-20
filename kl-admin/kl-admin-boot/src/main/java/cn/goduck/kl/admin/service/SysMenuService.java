@@ -4,7 +4,7 @@ import cn.goduck.kl.admin.entity.SysMenu;
 import cn.goduck.kl.admin.query.SysMenuQuery;
 import cn.goduck.kl.admin.vo.RouteVO;
 import cn.goduck.kl.admin.vo.MenuVO;
-import cn.goduck.kl.admin.vo.TreeVO;
+import cn.goduck.kl.common.core.vo.TreeVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

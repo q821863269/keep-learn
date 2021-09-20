@@ -5,10 +5,10 @@ import cn.goduck.kl.admin.mapper.SysDeptMapper;
 import cn.goduck.kl.admin.query.SysDeptQuery;
 import cn.goduck.kl.admin.service.SysDeptService;
 import cn.goduck.kl.admin.vo.DeptVO;
-import cn.goduck.kl.admin.vo.TreeVO;
 import cn.goduck.kl.common.core.base.BaseEntity;
 import cn.goduck.kl.common.core.constant.GlobalConstant;
 import cn.goduck.kl.common.core.constant.StrConstant;
+import cn.goduck.kl.common.core.vo.TreeVO;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 /**
  * Desc:
@@ -36,11 +37,21 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public List<DeptVO> tableList(SysDeptQuery sysDeptQuery) {
         LambdaQueryWrapper<SysDept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(StrUtil.isNotBlank(sysDeptQuery.getName()), SysDept::getName, sysDeptQuery.getName());
-        lambdaQueryWrapper.eq(ObjectUtil.isNotNull(sysDeptQuery.getStatus()), SysDept::getStatus, sysDeptQuery.getStatus());
+        boolean haveName = StrUtil.isNotBlank(sysDeptQuery.getName());
+        boolean haveStatus = ObjectUtil.isNotNull(sysDeptQuery.getStatus());
+        lambdaQueryWrapper.like(haveName, SysDept::getName, sysDeptQuery.getName());
+        lambdaQueryWrapper.eq(haveStatus, SysDept::getStatus, sysDeptQuery.getStatus());
         lambdaQueryWrapper.orderByAsc(SysDept::getSort);
         List<SysDept> deptList = this.list(lambdaQueryWrapper);
-        return recursionTableList(GlobalConstant.DEPT_ROOT_ID, deptList);
+        if (haveName || haveStatus) {
+            return deptList.stream().map(dept -> {
+                DeptVO deptVO = new DeptVO();
+                BeanUtil.copyProperties(dept, deptVO);
+                return deptVO;
+            }).collect(Collectors.toList());
+        } else {
+            return recursionTableList(GlobalConstant.DEPT_ROOT_ID, deptList);
+        }
     }
 
     /**
@@ -141,13 +152,13 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         List<String> idList = Arrays.asList(ids.split(StrConstant.COMMA));
         // 删除部门及子部门
         idList.forEach(id -> {
-                    boolean removeResult = this.remove(
-                            new LambdaQueryWrapper<SysDept>()
-                                    .eq(BaseEntity::getId, id)
-                                    .or()
-                                    .apply("concat (',',tree_path,',') like concat('%,',{0},',%')", id));
-                    if (!removeResult) result.set(Boolean.FALSE);
-                });
+            boolean removeResult = this.remove(
+                    new LambdaQueryWrapper<SysDept>()
+                            .eq(BaseEntity::getId, id)
+                            .or()
+                            .apply("concat (',',tree_path,',') like concat('%,',{0},',%')", id));
+            if (!removeResult) result.set(Boolean.FALSE);
+        });
         return result.get();
     }
 

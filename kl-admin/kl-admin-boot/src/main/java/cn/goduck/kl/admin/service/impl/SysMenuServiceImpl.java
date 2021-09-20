@@ -6,8 +6,8 @@ import cn.goduck.kl.admin.query.SysMenuQuery;
 import cn.goduck.kl.admin.service.SysMenuService;
 import cn.goduck.kl.admin.vo.RouteVO;
 import cn.goduck.kl.admin.vo.MenuVO;
-import cn.goduck.kl.admin.vo.TreeVO;
 import cn.goduck.kl.common.core.constant.GlobalConstant;
+import cn.goduck.kl.common.core.vo.TreeVO;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Desc:
@@ -100,9 +101,17 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<MenuVO> tableList(SysMenuQuery sysMenuQuery) {
+        boolean haveName = StrUtil.isNotBlank(sysMenuQuery.getName());
         List<SysMenu> menuList = this.list(new LambdaQueryWrapper<SysMenu>()
-                .like(StrUtil.isNotBlank(sysMenuQuery.getName()), SysMenu::getName, sysMenuQuery.getName())
+                .like(haveName, SysMenu::getName, sysMenuQuery.getName())
                 .orderByAsc(SysMenu::getSort));
+        if (haveName) {
+            return menuList.stream().map(menu -> {
+                MenuVO menuVO = new MenuVO();
+                BeanUtil.copyProperties(menu, menuVO);
+                return menuVO;
+            }).collect(Collectors.toList());
+        }
         return recursionTableList(GlobalConstant.MENU_ROOT_ID, menuList);
     }
 

@@ -33,7 +33,9 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         } else if (throwable instanceof ResponseStatusException) {
             httpStatus = ((ResponseStatusException) throwable).getStatus();
             msg = ((ResponseStatusException) throwable).getMessage();
-            log.error("[网关异常处理]请求路径：{} 异常信息：{}", serverWebExchange.getRequest().getPath(), throwable.getMessage());
+            log.error("[网关异常处理] 请求路径：{} 异常信息：{}", serverWebExchange.getRequest().getPath(), throwable.getMessage());
+        } else {
+            log.error("[网关异常] 请求路径：{}", serverWebExchange.getRequest().getPath(), throwable);
         }
         return GatewayResponseUtils.write(serverWebExchange, httpStatus, R.failed(msg));
     }

@@ -74,7 +74,7 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
 
         // 缓存取 URL权限-角色集合 规则数据
         // urlPermRolesRules = [{'key':'GET:/api/v1/users/*','value':['ADMIN','TEST']},...]
-        Map<String, String> urlRolesMap = getUrlPermRolesMap();
+        Map<String, List<String>> urlRolesMap = getUrlPermRolesMap();
 
         // 根据请求路径判断有访问权限的角色列表(拥有访问权限的角色)
         List<String> authorizedRoles = null;
@@ -82,14 +82,12 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
         boolean requireCheck = false;
 
         // 循环所有URL权限规则，判断是否需要鉴权
-        for (Map.Entry<String, String> entry : urlRolesMap.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : urlRolesMap.entrySet()) {
             String urlPerm = entry.getKey();
             if (pathMatcher.match(urlPerm, restfulPath)) {
                 requireCheck = true;
                 // URL权限对应的角色
-                String roles = entry.getValue();
-                List<String> roleList = Convert.toList(String.class, roles);
-                authorizedRoles = new ArrayList<>(roleList);
+                authorizedRoles = entry.getValue();
                 break;
             }
         }
@@ -107,9 +105,9 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
         return Mono.just(new AuthorizationDecision(granted));
     }
 
-    private Map<String, String> getUrlPermRolesMap() {
-        Map<String, String> urlRolesMap;
-        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+    private Map<String, List<String>> getUrlPermRolesMap() {
+        Map<String, List<String>> urlRolesMap;
+        HashOperations<String, String, List<String>> hashOperations = redisTemplate.opsForHash();
         if (localCacheEnabled) {
             // 先从本地缓存取
             urlRolesMap = urlPermRolesLocalCache.getCache(RedisConstant.URL_PERM_ROLES_KEY);
