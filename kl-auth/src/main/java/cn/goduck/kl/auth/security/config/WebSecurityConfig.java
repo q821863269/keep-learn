@@ -70,9 +70,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public TokenEnhancer tokenEnhancer() {
         return (accessToken, authentication) -> {
             Map<String, Object> additionalInfo = CollectionUtil.newHashMap();
-            OAuthUserDetails OAuthUserDetails = (OAuthUserDetails) authentication.getUserAuthentication().getPrincipal();
-            additionalInfo.put(AuthConstant.USER_ID_KEY, OAuthUserDetails.getId());
-            additionalInfo.put(AuthConstant.USER_NAME_KEY, OAuthUserDetails.getUsername());
+            OAuthUserDetails oauthUserDetails = (OAuthUserDetails) authentication.getUserAuthentication().getPrincipal();
+            additionalInfo.put(AuthConstant.USER_ID_KEY, oauthUserDetails.getId());
+            additionalInfo.put(AuthConstant.USER_NAME_KEY, oauthUserDetails.getUsername());
+            additionalInfo.put(AuthConstant.DEPT_ID_KEY, oauthUserDetails.getDeptId());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;
         };

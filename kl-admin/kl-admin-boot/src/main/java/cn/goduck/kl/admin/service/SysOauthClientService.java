@@ -1,6 +1,8 @@
 package cn.goduck.kl.admin.service;
 
 import cn.goduck.kl.admin.entity.SysOauthClient;
+import cn.goduck.kl.admin.query.SysOauthClientQuery;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -10,5 +12,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysOauthClientService extends IService<SysOauthClient> {
 
+    IPage<SysOauthClient> page(SysOauthClientQuery sysOauthClientQuery);
+
+    SysOauthClient getOAuthClientById(String clientId);
 
 }

@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
  * Desc: 角色表
  * Author: Kon
@@ -41,6 +43,13 @@ public class SysRole extends BaseEntity {
     private Integer sort;
 
     /**
+     * 数据范围
+     */
+    @TableField(value = "data_scope")
+    @ApiModelProperty(value = "数据范围")
+    private Integer dataScope;
+
+    /**
      * 角色状态（0正常 1停用）
      */
     @TableField(value = "`status`")
@@ -54,4 +63,13 @@ public class SysRole extends BaseEntity {
     @TableField(value = "deleted")
     @ApiModelProperty(value = "删除标识（0未删除 1已删除）")
     private Boolean deleted;
+
+    // ============================================附加字段============================================
+
+    @TableField(exist = false)
+    private List<Long> menuIds;
+
+    @TableField(exist = false)
+    private List<Long> permissionIds;
+
 }

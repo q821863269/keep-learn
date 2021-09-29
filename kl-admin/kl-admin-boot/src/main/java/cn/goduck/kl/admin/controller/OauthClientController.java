@@ -33,48 +33,39 @@ public class OauthClientController implements OAuthClientFeignClient {
     @ApiOperation(value = "列表分页")
     @GetMapping
     public R<IPage<SysOauthClient>> page(SysOauthClientQuery sysOauthClientQuery) {
-        String clientId = sysOauthClientQuery.getClientId();
-        IPage<SysOauthClient> page = sysOauthClientService.page(sysOauthClientQuery.page(),
-                new LambdaQueryWrapper<SysOauthClient>().like(StrUtil.isNotBlank(clientId), SysOauthClient::getClientId, clientId));
+        IPage<SysOauthClient> page = sysOauthClientService.page(sysOauthClientQuery);
         return R.ok(page);
     }
 
     @ApiOperation(value = "客户端详情")
     @GetMapping("/{id}")
     public R<SysOauthClient> detail(@PathVariable @ApiParam("id") String id) {
-        SysOauthClient client = sysOauthClientService.getById(id);
-        return R.ok(client);
+        return R.ok(sysOauthClientService.getById(id));
     }
 
     @ApiOperation(value = "新增客户端")
     @PostMapping
     public R<Object> add(@RequestBody SysOauthClient client) {
-        boolean status = sysOauthClientService.save(client);
-        return R.judge(status);
+        return R.judge(sysOauthClientService.save(client));
     }
 
     @ApiOperation(value = "修改客户端")
     @PutMapping(value = "/{id}")
-    public R<Object> update(@PathVariable @ApiParam("id") Long id,
-                            @RequestBody SysOauthClient client) {
-        boolean status = sysOauthClientService.updateById(client);
-        return R.judge(status);
+    public R<Object> update(@PathVariable @ApiParam("id") Long id, @RequestBody SysOauthClient client) {
+        return R.judge(sysOauthClientService.updateById(client));
     }
 
     @ApiOperation(value = "删除客户端")
     @DeleteMapping("/{ids}")
     public R<Object> delete(@PathVariable("ids") @ApiParam("id集合,以,拼接字符串") String ids) {
-        boolean status = sysOauthClientService.removeByIds(Arrays.asList(ids.split(StrConstant.COMMA)));
-        return R.judge(status);
+        return R.judge(sysOauthClientService.removeByIds(Arrays.asList(ids.split(StrConstant.COMMA))));
     }
 
     @ApiOperation(value = "根据客户端id获取客户端信息")
     @GetMapping("/clientId/{clientId}")
     @Override
     public R<SysOauthClient> getOAuthClientById(@PathVariable @ApiParam("客户端id") String clientId) {
-        SysOauthClient client = sysOauthClientService.getOne(
-                new LambdaQueryWrapper<SysOauthClient>().eq(SysOauthClient::getClientId, clientId), false);
-        return R.ok(client);
+        return R.ok(sysOauthClientService.getOAuthClientById(clientId));
     }
 
 }

@@ -10,8 +10,10 @@ import cn.goduck.kl.common.core.constant.GlobalConstant;
 import cn.goduck.kl.common.core.vo.TreeVO;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -137,6 +139,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                     menuTableList.add(menuVO);
                 });
         return menuTableList;
+    }
+
+    @Override
+    public boolean patchMenu(SysMenu sysMenu) {
+        LambdaUpdateWrapper<SysMenu> updateWrapper = new LambdaUpdateWrapper<SysMenu>()
+                .eq(SysMenu::getId, sysMenu.getId())
+                .set(ObjectUtil.isNotNull(sysMenu.getVisible()), SysMenu::getVisible, sysMenu.getVisible());
+        return this.update(updateWrapper);
     }
 
 }

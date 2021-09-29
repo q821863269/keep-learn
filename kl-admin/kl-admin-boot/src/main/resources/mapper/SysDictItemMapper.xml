@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.goduck.kl.admin.mapper.SysRoleMapper">
-  <resultMap id="BaseResultMap" type="cn.goduck.kl.admin.entity.SysRole">
+<mapper namespace="cn.goduck.kl.admin.mapper.SysDictItemMapper">
+  <resultMap id="BaseResultMap" type="cn.goduck.kl.admin.entity.SysDictItem">
     <!--@mbg.generated-->
-    <!--@Table sys_role-->
+    <!--@Table sys_dict_item-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="dict_code" jdbcType="VARCHAR" property="dictCode" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="data_scope" jdbcType="INTEGER" property="dataScope" />
     <result column="status" jdbcType="BOOLEAN" property="status" />
-    <result column="deleted" jdbcType="BOOLEAN" property="deleted" />
+    <result column="defaulted" jdbcType="BOOLEAN" property="defaulted" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_by" jdbcType="BIGINT" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="BIGINT" property="updateBy" />
@@ -18,6 +19,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, `name`, code, sort, data_scope, `status`, deleted, create_by, create_time, update_by, update_time
+    id, `name`, `value`, dict_code, sort, `status`, defaulted, remark, create_by, create_time, 
+    update_by, update_time
   </sql>
 </mapper>

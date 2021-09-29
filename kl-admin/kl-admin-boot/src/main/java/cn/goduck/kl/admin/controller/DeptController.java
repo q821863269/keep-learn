@@ -59,16 +59,14 @@ public class DeptController {
 
     @ApiOperation(value = "修改部门")
     @PutMapping(value = "/{id}")
-    public R<Object> update(@PathVariable @ApiParam("id") Long id,
-                            @RequestBody SysDept sysDept) {
+    public R<Object> update(@PathVariable @ApiParam("id") Long id, @RequestBody SysDept sysDept) {
         return R.judge(sysDeptService.saveDept(sysDept));
     }
 
     @ApiOperation(value = "删除部门")
     @DeleteMapping("/{ids}")
     public R<Object> delete(@PathVariable("ids") @ApiParam("id集合,以,拼接字符串") String ids) {
-        boolean status = sysDeptService.deleteByIds(ids);
-        return R.judge(status);
+        return R.judge(sysDeptService.deleteByIds(ids));
     }
 
 }

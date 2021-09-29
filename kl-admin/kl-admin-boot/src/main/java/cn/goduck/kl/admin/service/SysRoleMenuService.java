@@ -3,6 +3,8 @@ package cn.goduck.kl.admin.service;
 import cn.goduck.kl.admin.entity.SysRoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * Desc:
  * Author: Kon
@@ -10,5 +12,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysRoleMenuService extends IService<SysRoleMenu> {
 
+    List<Long> menuIdList(Long roleId);
+
+    boolean updateRoleMenu(Long roleId, List<Long> menuIdList);
 
 }

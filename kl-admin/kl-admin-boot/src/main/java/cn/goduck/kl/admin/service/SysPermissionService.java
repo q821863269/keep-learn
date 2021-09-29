@@ -17,8 +17,10 @@ public interface SysPermissionService extends IService<SysPermission> {
 
     List<String> listBtnPermByRoles(List<String> roles);
 
+    List<SysPermission> permissionList(Long menuId);
+
     IPage<SysPermission> page(Page<SysPermission> page, SysPermissionQuery sysPermissionQuery);
 
-    boolean refreshPermRolesRules();
+    void refreshPermRolesRules();
 
 }

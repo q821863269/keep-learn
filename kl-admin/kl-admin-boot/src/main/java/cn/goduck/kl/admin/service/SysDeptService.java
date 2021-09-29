@@ -15,9 +15,9 @@ import java.util.List;
  */
 public interface SysDeptService extends IService<SysDept> {
 
-    List<DeptVO> tableList(SysDeptQuery sysDeptQuery);
-
     List<TreeVO> selectList();
+
+    List<DeptVO> tableList(SysDeptQuery sysDeptQuery);
 
     List<SysDept> deptList();
 

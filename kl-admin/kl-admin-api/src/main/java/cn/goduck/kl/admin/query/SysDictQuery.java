@@ -1,5 +1,6 @@
 package cn.goduck.kl.admin.query;
 
+import cn.goduck.kl.admin.entity.SysDict;
 import cn.goduck.kl.common.core.base.BasePageQuery;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "字典列表查询")
-public class SysDictQuery extends BasePageQuery<Object> {
+public class SysDictQuery extends BasePageQuery<SysDict> {
 
     @ApiModelProperty(value = "字典名称")
     private String name;

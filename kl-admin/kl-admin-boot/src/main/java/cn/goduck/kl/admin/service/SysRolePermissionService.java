@@ -1,7 +1,10 @@
 package cn.goduck.kl.admin.service;
 
+import cn.goduck.kl.admin.dto.RolePermissionDTO;
 import cn.goduck.kl.admin.entity.SysRolePermission;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * Desc:
@@ -10,5 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysRolePermissionService extends IService<SysRolePermission> {
 
+    List<Long> permissionIdList(Long roleId, Long menuId);
+
+    boolean updateRolePermission(RolePermissionDTO rolePermissionDTO);
 
 }

@@ -4,6 +4,7 @@
 
     <resultMap id="BaseResultMap" type="cn.goduck.kl.admin.dto.UserDTO">
         <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
         <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
@@ -16,6 +17,7 @@
     <select id="getByUsername" resultMap="BaseResultMap">
         select
            t1.id,
+           t1.dept_id,
            t1.username,
            t1.nickname,
            t1.password,
@@ -62,7 +64,7 @@
             and t1.status = #{sysUserQuery.status}
         </if>
         <if test="sysUserQuery.deptId != null">
-            and concat(',',concat(t2.tree_path,',',t2.id),',') like CONCAT('%,',#{sysUserQuery.deptId},',%')
+            and concat(',',concat(t2.tree_path,',',t2.id),',') like concat('%,',#{sysUserQuery.deptId},',%')
         </if>
         <if test="sysUserQuery.startTime != null">
             and t1.update_time <![CDATA[ >=  ]]> #{sysUserQuery.startTime}
@@ -71,7 +73,7 @@
             and t1.update_time <![CDATA[ <=  ]]> #{sysUserQuery.endTime}
         </if>
         group by t1.id
-        order by t1.create_time desc, id asc
+        order by t1.create_time desc
     </sql>
 
     <select id="page" resultType="cn.goduck.kl.admin.entity.SysUser">

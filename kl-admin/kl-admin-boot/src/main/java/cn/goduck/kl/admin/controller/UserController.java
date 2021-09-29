@@ -69,32 +69,32 @@ public class UserController implements UserFeignClient {
         if (exist) {
             throw new BizException(ResultCode.USERNAME_EXISTS);
         }
-        // 保存用户
-        boolean status = sysUserService.saveUser(sysUser);
-        return R.judge(status);
+        return R.judge(sysUserService.saveUser(sysUser));
     }
 
     @ApiOperation(value = "修改用户")
     @PutMapping(value = "/{id}")
     public R<Object> update(@PathVariable @ApiParam("id") Long id,
                             @RequestBody SysUser sysUser) {
-        boolean status = sysUserService.updateUser(sysUser);
-        return R.judge(status);
+        // 校验用户名是否存在
+        boolean exist = sysUserService.checkUsername(sysUser.getUsername());
+        if (exist) {
+            throw new BizException(ResultCode.USERNAME_EXISTS);
+        }
+        return R.judge(sysUserService.updateUser(sysUser));
     }
 
     @ApiOperation(value = "选择性更新")
     @PatchMapping(value = "/{id}")
     public R<Object> patch(@PathVariable @ApiParam("id") Long id,
                            @RequestBody SysUser sysUser) {
-        boolean status = sysUserService.patchUser(sysUser);
-        return R.judge(status);
+        return R.judge(sysUserService.patchUser(sysUser));
     }
 
     @ApiOperation(value = "删除用户")
     @DeleteMapping("/{ids}")
     public R<Object> delete(@PathVariable("ids") @ApiParam("id集合,以,拼接字符串") String ids) {
-        boolean status = sysUserService.removeByIds(Arrays.asList(ids.split(StrConstant.COMMA)));
-        return R.judge(status);
+        return R.judge(sysUserService.removeByIds(Arrays.asList(ids.split(StrConstant.COMMA))));
     }
 
     @ApiOperation(value = "导入用户")
@@ -104,7 +104,7 @@ public class UserController implements UserFeignClient {
             return R.failed(ResultCode.EXCEL_IS_EMPTY);
         }
         String result = sysUserService.excelImport(file);
-        return StrUtil.isBlank(result) ? R.ok() : R.failed(result);
+        return R.judge(StrUtil.isBlank(result));
     }
 
     @ApiOperation(value = "导出用户")
@@ -117,8 +117,7 @@ public class UserController implements UserFeignClient {
     @GetMapping("/username/{username}")
     @Override
     public R<UserDTO> getUserByUsername(@PathVariable @ApiParam("用户名") String username) {
-        UserDTO userDTO = sysUserService.getByUsername(username);
-        return R.ok(userDTO);
+        return R.ok(sysUserService.getByUsername(username));
     }
 
     @ApiOperation(value = "获取当前登陆的用户信息")

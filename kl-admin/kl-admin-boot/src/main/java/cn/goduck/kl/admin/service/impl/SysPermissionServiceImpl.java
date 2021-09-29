@@ -8,6 +8,7 @@ import cn.goduck.kl.common.core.constant.RedisConstant;
 import cn.goduck.kl.common.core.constant.StrConstant;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -43,7 +44,12 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Override
-    public boolean refreshPermRolesRules() {
+    public List<SysPermission> permissionList(Long menuId) {
+        return this.list(new LambdaQueryWrapper<SysPermission>().eq(SysPermission::getMenuId, menuId));
+    }
+
+    @Override
+    public void refreshPermRolesRules() {
         // 删除redis中url权限和btn权限缓存
         redisTemplate.delete(Arrays.asList(RedisConstant.URL_PERM_ROLES_KEY, RedisConstant.BTN_PERM_ROLES_KEY));
         List<SysPermission> sysPermissionList = this.baseMapper.permRolesList();
@@ -71,7 +77,6 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
                 redisTemplate.opsForHash().putAll(RedisConstant.BTN_PERM_ROLES_KEY, btnPermRolesMap);
             }
         }
-        return true;
     }
 
 }

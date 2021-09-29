@@ -22,4 +22,6 @@ public interface SysMenuService extends IService<SysMenu> {
 
     List<MenuVO> tableList(SysMenuQuery sysMenuQuery);
 
+    boolean patchMenu(SysMenu sysMenu);
+
 }

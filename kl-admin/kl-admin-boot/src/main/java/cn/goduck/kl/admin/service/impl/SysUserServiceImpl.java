@@ -57,7 +57,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public boolean checkUsername(String username) {
-        Integer count = this.baseMapper.selectCount(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
+        int count = this.count(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
         return count > 0;
     }
 

@@ -16,4 +16,17 @@
     <!--@mbg.generated-->
     id, role_id, permission_id, create_by, create_time, update_by, update_time
   </sql>
+
+  <select id="permissionIdList" resultType="java.lang.Long">
+    select t1.permission_id from sys_role_permission t1
+    inner join sys_permission t2 ON t1.permission_id = t2.id
+    <where>
+      <if test="roleId != null">
+        and t1.role_id = #{roleId}
+      </if>
+      <if test="menuId != null">
+        and t2.menu_id = #{menuId}
+      </if>
+    </where>
+  </select>
 </mapper>

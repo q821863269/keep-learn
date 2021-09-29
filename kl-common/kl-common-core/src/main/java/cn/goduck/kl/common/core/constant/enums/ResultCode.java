@@ -40,7 +40,14 @@ public enum ResultCode implements IResultCode {
     ACCESS_UNAUTHORIZED(2002, "访问未授权"),
 
     // 用户相关
-    USERNAME_EXISTS(3001, "用户名已存在")
+    USERNAME_EXISTS(3001, "用户名已存在"),
+
+    // 角色相关
+    ROLE_NAME_OR_CODE_EXISTS(4001, "角色名称或角色编码已存在"),
+
+    // 字典相关
+    FIRST_DELETE_ASSOCIATE_DICT_ITEM(9001, "请先删除关联的字典数据"),
+
     ;
 
     @ApiModelProperty(value = "响应码")

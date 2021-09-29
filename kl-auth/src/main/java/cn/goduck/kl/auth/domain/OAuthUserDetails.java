@@ -22,6 +22,8 @@ public class OAuthUserDetails implements UserDetails {
 
     private Long id;
 
+    private Long deptId;
+
     private String username;
 
     private String password;
@@ -34,6 +36,7 @@ public class OAuthUserDetails implements UserDetails {
 
     public OAuthUserDetails(UserDTO user) {
         this.setId(user.getId());
+        this.setDeptId(user.getDeptId());
         this.setUsername(user.getUsername());
         this.setPassword(PasswordEncoderTypeEnum.BCRYPT.getPrefix() + user.getPassword());
         this.setEnabled(!user.getStatus());

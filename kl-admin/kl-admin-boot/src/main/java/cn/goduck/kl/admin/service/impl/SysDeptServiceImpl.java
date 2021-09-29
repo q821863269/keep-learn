@@ -35,6 +35,39 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
 
     @Override
+    public List<TreeVO> selectList() {
+        LambdaQueryWrapper<SysDept> lambdaQueryWrapper = new LambdaQueryWrapper<SysDept>()
+                .eq(SysDept::getStatus, GlobalConstant.VALID)
+                .orderByAsc(SysDept::getSort)
+                .select(BaseEntity::getId, SysDept::getName, SysDept::getParentId);
+        List<SysDept> deptList = this.list(lambdaQueryWrapper);
+        return recursionSelectList(GlobalConstant.DEPT_ROOT_ID, deptList);
+    }
+
+    /**
+     * 递归生成部门树
+     *
+     * @param parentId 父级Id
+     * @param deptList 部门集合
+     * @return 部门树
+     */
+    private List<TreeVO> recursionSelectList(Long parentId, List<SysDept> deptList) {
+        List<TreeVO> deptSelectList = new ArrayList<>();
+        Optional.ofNullable(deptList).orElse(new ArrayList<>())
+                .stream()
+                .filter(dept -> parentId.equals(dept.getParentId()))
+                .forEach(dept -> {
+                    TreeVO treeVO = new TreeVO();
+                    treeVO.setId(dept.getId());
+                    treeVO.setLabel(dept.getName());
+                    List<TreeVO> children = recursionSelectList(dept.getId(), deptList);
+                    treeVO.setChildren(children);
+                    deptSelectList.add(treeVO);
+                });
+        return deptSelectList;
+    }
+
+    @Override
     public List<DeptVO> tableList(SysDeptQuery sysDeptQuery) {
         LambdaQueryWrapper<SysDept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         boolean haveName = StrUtil.isNotBlank(sysDeptQuery.getName());
@@ -74,39 +107,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                     deptTableList.add(deptVO);
                 });
         return deptTableList;
-    }
-
-    @Override
-    public List<TreeVO> selectList() {
-        LambdaQueryWrapper<SysDept> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(SysDept::getStatus, GlobalConstant.VALID);
-        lambdaQueryWrapper.orderByAsc(SysDept::getSort);
-        lambdaQueryWrapper.select(BaseEntity::getId, SysDept::getName, SysDept::getParentId);
-        List<SysDept> deptList = this.list(lambdaQueryWrapper);
-        return recursionSelectList(GlobalConstant.DEPT_ROOT_ID, deptList);
-    }
-
-    /**
-     * 递归生成部门树
-     *
-     * @param parentId 父级Id
-     * @param deptList 部门集合
-     * @return 部门树
-     */
-    private List<TreeVO> recursionSelectList(Long parentId, List<SysDept> deptList) {
-        List<TreeVO> deptSelectList = new ArrayList<>();
-        Optional.ofNullable(deptList).orElse(new ArrayList<>())
-                .stream()
-                .filter(dept -> parentId.equals(dept.getParentId()))
-                .forEach(dept -> {
-                    TreeVO treeVO = new TreeVO();
-                    treeVO.setId(dept.getId());
-                    treeVO.setLabel(dept.getName());
-                    List<TreeVO> children = recursionSelectList(dept.getId(), deptList);
-                    treeVO.setChildren(children);
-                    deptSelectList.add(treeVO);
-                });
-        return deptSelectList;
     }
 
     @Override

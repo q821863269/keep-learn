@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.goduck.kl.admin.mapper.SysRoleMenuMapper">
-  <resultMap id="BaseResultMap" type="cn.goduck.kl.admin.entity.SysRoleMenu">
+<mapper namespace="cn.goduck.kl.admin.mapper.SysDictMapper">
+  <resultMap id="BaseResultMap" type="cn.goduck.kl.admin.entity.SysDict">
     <!--@mbg.generated-->
-    <!--@Table sys_role_menu-->
+    <!--@Table sys_dict-->
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="role_id" jdbcType="BIGINT" property="roleId" />
-    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="status" jdbcType="BOOLEAN" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="deleted" jdbcType="BOOLEAN" property="deleted" />
     <result column="create_by" jdbcType="BIGINT" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="BIGINT" property="updateBy" />
@@ -14,13 +17,6 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, role_id, menu_id, create_by, create_time, update_by, update_time
+    id, `name`, code, `status`, remark, deleted, create_by, create_time, update_by, update_time
   </sql>
-
-  <select id="menuIdList" resultType="java.lang.Long">
-     select t1.menu_id from sys_role_menu t1
-     inner join sys_menu t2 on t1.menu_id = t2.id
-     where t1.role_id = #{roleId}
-  </select>
-
 </mapper>

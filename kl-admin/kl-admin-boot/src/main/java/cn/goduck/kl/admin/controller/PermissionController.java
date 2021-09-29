@@ -33,54 +33,47 @@ public class PermissionController {
     @ApiOperation(value = "列表分页")
     @GetMapping
     public R<IPage<SysPermission>> page(SysPermissionQuery sysPermissionQuery) {
-        IPage<SysPermission> page = sysPermissionService.page(
-                sysPermissionQuery.page(),
-                sysPermissionQuery);
+        IPage<SysPermission> page = sysPermissionService.page(sysPermissionQuery.page(), sysPermissionQuery);
         return R.ok(page);
     }
 
-    @ApiOperation(value = "列表")
+    @ApiOperation(value = "权限列表")
     @GetMapping("/list")
     public R<List<SysPermission>> list(@ApiParam("菜单id") @Param("menuId") Long menuId) {
-        List<SysPermission> list = sysPermissionService.list(
-                new LambdaQueryWrapper<SysPermission>()
-                        .eq(SysPermission::getMenuId, menuId));
+        List<SysPermission> list = sysPermissionService.permissionList(menuId);
         return R.ok(list);
     }
 
     @ApiOperation(value = "权限详情")
     @GetMapping("/{id}")
     public R<SysPermission> detail(@PathVariable @ApiParam("id") Long id) {
-        SysPermission sysPermission = sysPermissionService.getById(id);
-        return R.ok(sysPermission);
+        return R.ok(sysPermissionService.getById(id));
     }
 
     @ApiOperation(value = "新增权限")
     @PostMapping
     public R<Object> add(@RequestBody SysPermission sysPermission) {
-        boolean status = sysPermissionService.save(sysPermission);
-        if (status) {
-            status = sysPermissionService.refreshPermRolesRules();
+        boolean result = sysPermissionService.save(sysPermission);
+        if (result) {
+            sysPermissionService.refreshPermRolesRules();
         }
-        return R.judge(status);
+        return R.judge(result);
     }
 
     @ApiOperation(value = "修改权限")
     @PutMapping(value = "/{id}")
-    public R<Object> update(@PathVariable @ApiParam("id") Long id,
-                            @RequestBody SysPermission sysPermission) {
-        boolean status = sysPermissionService.updateById(sysPermission);
-        if (status) {
-            status = sysPermissionService.refreshPermRolesRules();
+    public R<Object> update(@PathVariable @ApiParam("id") Long id, @RequestBody SysPermission sysPermission) {
+        boolean result = sysPermissionService.updateById(sysPermission);
+        if (result) {
+            sysPermissionService.refreshPermRolesRules();
         }
-        return R.judge(status);
+        return R.judge(result);
     }
 
     @ApiOperation(value = "删除权限")
     @DeleteMapping("/{ids}")
     public R<Object> delete(@PathVariable("ids") @ApiParam("id集合,以,拼接字符串") String ids) {
-        boolean status = sysPermissionService.removeByIds(Arrays.asList(ids.split(StrConstant.COMMA)));
-        return R.judge(status);
+        return R.judge(sysPermissionService.removeByIds(Arrays.asList(ids.split(StrConstant.COMMA))));
     }
 
 }

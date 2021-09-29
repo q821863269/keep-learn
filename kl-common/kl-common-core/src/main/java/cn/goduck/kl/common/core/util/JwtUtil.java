@@ -67,6 +67,10 @@ public class JwtUtil {
         return getJwtPayload().getStr(AuthConstant.USER_NAME_KEY);
     }
 
+    public static Long getDeptId() {
+        return getJwtPayload().getLong(AuthConstant.DEPT_ID_KEY);
+    }
+
     @SuppressWarnings("unchecked")
     public static List<String> getRoles() {
         JSONObject payload = getJwtPayload();
