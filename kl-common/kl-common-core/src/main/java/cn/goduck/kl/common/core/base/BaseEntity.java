@@ -41,31 +41,4 @@ public class BaseEntity implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
 
-    /**
-     * 设置创建相关字段的值
-     */
-    public void setCreateFieldValue() {
-        this.setCreateBy(JwtUtil.getUserId());
-        this.setCreateTime(LocalDateTime.now());
-    }
-
-    /**
-     * 设置更新相关字段的值
-     */
-    public void setUpdateFieldValue() {
-        this.setUpdateBy(JwtUtil.getUserId());
-        this.setUpdateTime(LocalDateTime.now());
-    }
-
-    /**
-     * 根据id设置默认字段值
-     */
-    public void setDefaultFieldValue() {
-        if (ObjectUtil.isNull(id)) {
-            setCreateFieldValue();
-        } else {
-            setUpdateFieldValue();
-        }
-    }
-
 }

@@ -71,7 +71,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public boolean saveUser(SysUser sysUser) {
         // 设置默认密码
         sysUser.setPassword(passwordEncoder.encode(GlobalConstant.DEFAULT_USER_PASSWORD));
-        sysUser.setCreateFieldValue();
         // 保存用户
         boolean result = this.save(sysUser);
         if (result) {
@@ -82,7 +81,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                     SysUserRole sysUserRole = new SysUserRole();
                     sysUserRole.setUserId(sysUser.getId());
                     sysUserRole.setRoleId(roleId);
-                    sysUserRole.setCreateFieldValue();
                     userRoleList.add(sysUserRole);
                 });
                 // 保存用户角色关系
@@ -106,7 +104,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 SysUserRole sysUserRole = new SysUserRole();
                 sysUserRole.setUserId(userId);
                 sysUserRole.setRoleId(roleId);
-                sysUserRole.setCreateFieldValue();
                 addList.add(sysUserRole);
             });
             sysUserRoleService.saveBatch(addList);
@@ -120,7 +117,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                             .eq(SysUserRole::getRoleId, roleId)));
         }
         // 更新用户
-        sysUser.setUpdateFieldValue();
         return this.updateById(sysUser);
     }
 
@@ -131,7 +127,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (ObjectUtil.isNotNull(sysUser.getPassword())) {
             updateWrapper.set(SysUser::getPassword, passwordEncoder.encode(sysUser.getPassword()));
         }
-        sysUser.setUpdateFieldValue();
         return this.update(updateWrapper);
     }
 

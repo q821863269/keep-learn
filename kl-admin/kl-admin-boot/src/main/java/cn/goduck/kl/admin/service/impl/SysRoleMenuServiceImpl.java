@@ -49,14 +49,13 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
         // 删除数据库不存在的
         if (CollectionUtil.isNotEmpty(menuIdList)) {
-            List<Long> insertMenuIdList = menuIdList.stream().filter(id -> !menuIdList.contains(id)).collect(Collectors.toList());
+            List<Long> insertMenuIdList = menuIdList.stream().filter(id -> !dbMenuIdList.contains(id)).collect(Collectors.toList());
             if (CollectionUtil.isNotEmpty(insertMenuIdList)) {
                 List<SysRoleMenu> sysRoleMenuList = new ArrayList<>();
                 for (Long menuId : insertMenuIdList) {
                     SysRoleMenu sysRoleMenu = new SysRoleMenu();
                     sysRoleMenu.setRoleId(roleId);
                     sysRoleMenu.setMenuId(menuId);
-                    sysRoleMenu.setDefaultFieldValue();
                     sysRoleMenuList.add(sysRoleMenu);
                 }
                 result = this.saveBatch(sysRoleMenuList);

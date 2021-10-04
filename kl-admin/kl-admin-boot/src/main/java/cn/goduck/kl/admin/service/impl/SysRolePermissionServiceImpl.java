@@ -59,7 +59,6 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
                     SysRolePermission sysRolePermission = new SysRolePermission();
                     sysRolePermission.setRoleId(roleId);
                     sysRolePermission.setPermissionId(insertPermissionId);
-                    sysRolePermission.setDefaultFieldValue();
                     rolePermissionList.add(sysRolePermission);
                 }
                 result = this.saveBatch(rolePermissionList);

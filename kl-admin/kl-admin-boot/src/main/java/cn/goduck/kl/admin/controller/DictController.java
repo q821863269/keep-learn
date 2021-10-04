@@ -26,14 +26,14 @@ public class DictController {
     private final SysDictService sysDictService;
 
     @ApiOperation(value = "列表分页")
-    @GetMapping("/page")
+    @GetMapping
     public R<IPage<SysDict>> page(SysDictQuery sysDictQuery) {
         IPage<SysDict> page = sysDictService.page(sysDictQuery);
         return R.ok(page);
     }
 
     @ApiOperation(value = "字典列表")
-    @GetMapping
+    @GetMapping("/list")
     public R<List<SysDict>> list() {
         List<SysDict> list = sysDictService.dictList();
         return R.ok(list);

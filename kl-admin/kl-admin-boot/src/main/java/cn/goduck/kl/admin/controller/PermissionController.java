@@ -5,7 +5,6 @@ import cn.goduck.kl.admin.query.SysPermissionQuery;
 import cn.goduck.kl.admin.service.SysPermissionService;
 import cn.goduck.kl.common.core.base.R;
 import cn.goduck.kl.common.core.constant.StrConstant;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

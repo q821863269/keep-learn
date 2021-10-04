@@ -45,6 +45,12 @@ public class RoleController {
         return R.ok(sysRoleService.roleList());
     }
 
+    @ApiOperation(value = "角色详情")
+    @GetMapping("/{id}")
+    public R<SysRole> detail(@PathVariable @ApiParam("id") Long id) {
+        return R.ok(sysRoleService.getById(id));
+    }
+
     @ApiOperation(value = "新增角色")
     @PostMapping
     public R<Object> add(@RequestBody SysRole sysRole) {

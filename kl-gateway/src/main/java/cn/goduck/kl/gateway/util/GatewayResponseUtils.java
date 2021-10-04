@@ -36,6 +36,8 @@ public class GatewayResponseUtils {
     }
 
     public static Mono<Void> write(ServerHttpResponse serverHttpResponse, HttpStatus httpStatus, R<Object> r) {
+        serverHttpResponse.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        serverHttpResponse.setStatusCode(httpStatus);
         DataBuffer dataBuffer = buildDataBuffer(serverHttpResponse, r);
         return serverHttpResponse.writeWith(Mono.just(dataBuffer));
     }

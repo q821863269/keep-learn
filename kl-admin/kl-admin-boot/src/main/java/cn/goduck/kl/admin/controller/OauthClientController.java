@@ -6,8 +6,6 @@ import cn.goduck.kl.admin.query.SysOauthClientQuery;
 import cn.goduck.kl.admin.service.SysOauthClientService;
 import cn.goduck.kl.common.core.base.R;
 import cn.goduck.kl.common.core.constant.StrConstant;
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

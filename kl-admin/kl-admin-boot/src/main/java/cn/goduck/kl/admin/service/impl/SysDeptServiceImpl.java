@@ -121,7 +121,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public boolean saveDept(SysDept sysDept) {
         String deptTreePath = getDeptTreePath(sysDept);
         sysDept.setTreePath(deptTreePath);
-        sysDept.setDefaultFieldValue();
         return this.saveOrUpdate(sysDept);
     }
 

@@ -1,11 +1,14 @@
 security:
   # 配置白名单路径(无需登录)
+  # /admin/users/me 这个url暂时通过这里放行
+  # 后面这个要移到其他地方去，因为这里的url无法动态配置
   ignoreUrls:
     - /webjars/**
     - /swagger-resources/**
     - /doc.html
     - /*/v2/api-docs
     - /oauth/token/**
+    - /admin/users/me
 
   # 是否开启本地缓存
   localCache:

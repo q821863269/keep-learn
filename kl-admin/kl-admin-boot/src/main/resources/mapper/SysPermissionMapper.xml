@@ -74,9 +74,8 @@
         t3.code
     FROM sys_permission t1
     LEFT JOIN sys_role_permission t2 ON t1.id = t2.permission_id
-    LEFT JOIN sys_role t3 ON t2.role_id = t3.id
+    LEFT JOIN sys_role t3 ON t2.role_id = t3.id and t3.deleted = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
     where t1.deleted = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
-    and t3.deleted = ${@cn.goduck.kl.common.core.constant.GlobalConstant@VALID}
   </select>
 
 </mapper>

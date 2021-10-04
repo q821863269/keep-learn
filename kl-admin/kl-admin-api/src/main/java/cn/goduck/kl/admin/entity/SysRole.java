@@ -43,10 +43,10 @@ public class SysRole extends BaseEntity {
     private Integer sort;
 
     /**
-     * 数据范围
+     * 数据权限
      */
     @TableField(value = "data_scope")
-    @ApiModelProperty(value = "数据范围")
+    @ApiModelProperty(value = "数据权限")
     private Integer dataScope;
 
     /**

@@ -76,11 +76,6 @@ public class UserController implements UserFeignClient {
     @PutMapping(value = "/{id}")
     public R<Object> update(@PathVariable @ApiParam("id") Long id,
                             @RequestBody SysUser sysUser) {
-        // 校验用户名是否存在
-        boolean exist = sysUserService.checkUsername(sysUser.getUsername());
-        if (exist) {
-            throw new BizException(ResultCode.USERNAME_EXISTS);
-        }
         return R.judge(sysUserService.updateUser(sysUser));
     }
 
