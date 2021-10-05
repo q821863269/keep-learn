@@ -15,7 +15,7 @@
     <result column="access_token_validity" jdbcType="INTEGER" property="accessTokenValidity" />
     <result column="refresh_token_validity" jdbcType="INTEGER" property="refreshTokenValidity" />
     <result column="additional_information" jdbcType="VARCHAR" property="additionalInformation" />
-    <result column="auto_approve" jdbcType="VARCHAR" property="autoApprove" />
+    <result column="auto_approve" jdbcType="BOOLEAN" property="autoApprove" />
     <result column="create_by" jdbcType="BIGINT" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="BIGINT" property="updateBy" />

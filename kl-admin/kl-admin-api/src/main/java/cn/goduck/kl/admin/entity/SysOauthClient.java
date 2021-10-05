@@ -94,5 +94,5 @@ public class SysOauthClient extends BaseEntity {
      */
     @TableField(value = "auto_approve")
     @ApiModelProperty(value = "是否自动放行")
-    private String autoApprove;
+    private Boolean autoApprove;
 }

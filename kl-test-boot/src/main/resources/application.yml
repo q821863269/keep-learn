@@ -12,7 +12,7 @@ spring:
   datasource:
     username: root
     password: wotainanle
-    url: jdbc:mysql://mysql-server:3306/kl-test?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://mysql-server:3306/kl-admin?useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis-plus:
