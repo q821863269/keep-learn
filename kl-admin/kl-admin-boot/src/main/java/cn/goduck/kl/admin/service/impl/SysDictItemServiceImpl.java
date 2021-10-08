@@ -30,7 +30,8 @@ public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDi
         String dictCode = sysDictItemQuery.getDictCode();
         LambdaQueryWrapper<SysDictItem> lambdaQueryWrapper = new LambdaQueryWrapper<SysDictItem>()
                 .like(StrUtil.isNotBlank(name), SysDictItem::getName, name)
-                .eq(StrUtil.isNotBlank(dictCode), SysDictItem::getDictCode, dictCode);
+                .eq(StrUtil.isNotBlank(dictCode), SysDictItem::getDictCode, dictCode)
+                .orderByAsc(SysDictItem::getSort).orderByDesc(BaseEntity::getId);
         return this.page(sysDictItemQuery.page(), lambdaQueryWrapper);
     }
 
