@@ -48,17 +48,17 @@ public class SysDictItem extends BaseEntity {
     private Integer sort;
 
     /**
-     * 状态（0 停用 1正常）
+     * 状态（0-正常 ,1-停用）
      */
     @TableField(value = "status")
-    @ApiModelProperty(value="状态（0 停用 1正常）")
+    @ApiModelProperty(value="状态（0-正常 ,1-停用）")
     private Boolean status;
 
     /**
-     * 是否默认（0否 1是）
+     * 是否默认（0-否 ,1-是）
      */
     @TableField(value = "defaulted")
-    @ApiModelProperty(value="是否默认（0否 1是）")
+    @ApiModelProperty(value="是否默认（0-否 ,1-是）")
     private Boolean defaulted;
 
     /**

@@ -85,7 +85,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
         if (CollectionUtil.isNotEmpty(codeList)) {
             int count = sysDictItemService.count(new LambdaQueryWrapper<SysDictItem>()
                     .in(SysDictItem::getDictCode, codeList));
-            if (count == 0) throw new BizException(ResultCode.FIRST_DELETE_ASSOCIATE_DICT_ITEM);
+            if (count > 0) throw new BizException(ResultCode.FIRST_DELETE_ASSOCIATE_DICT_ITEM);
         }
         return this.removeByIds(idList);
     }
