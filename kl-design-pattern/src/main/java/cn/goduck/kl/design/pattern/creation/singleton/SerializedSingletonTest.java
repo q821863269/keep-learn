@@ -16,8 +16,7 @@ public class SerializedSingletonTest {
         out.close();
 
         // deserailize from file to object
-        ObjectInput in = new ObjectInputStream(new FileInputStream(
-                "filename.ser"));
+        ObjectInput in = new ObjectInputStream(new FileInputStream("filename.ser"));
         SerializedSingleton instanceTwo = (SerializedSingleton) in.readObject();
         in.close();
 
