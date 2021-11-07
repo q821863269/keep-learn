@@ -1,4 +1,6 @@
-package cn.goduck.kl.design.pattern.structure.facade;
+package cn.goduck.kl.design.pattern.structure.facade.codec;
+
+import cn.goduck.kl.design.pattern.structure.facade.VideoFile;
 
 /**
  * Desc:

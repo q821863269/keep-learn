@@ -1,4 +1,4 @@
-package cn.goduck.kl.design.pattern.structure.facade;
+package cn.goduck.kl.design.pattern.structure.facade.codec;
 
 /**
  * Desc:

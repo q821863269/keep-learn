@@ -1,5 +1,7 @@
 package cn.goduck.kl.design.pattern.structure.facade;
 
+import cn.goduck.kl.design.pattern.structure.facade.codec.Codec;
+
 /**
  * Desc:
  * Author: Kon

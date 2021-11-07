@@ -1,4 +1,8 @@
-package cn.goduck.kl.design.pattern.structure.facade;
+package cn.goduck.kl.design.pattern.structure.facade.codec;
+
+import cn.goduck.kl.design.pattern.structure.facade.AudioMixer;
+import cn.goduck.kl.design.pattern.structure.facade.BitrateReader;
+import cn.goduck.kl.design.pattern.structure.facade.VideoFile;
 
 import java.io.File;
 
